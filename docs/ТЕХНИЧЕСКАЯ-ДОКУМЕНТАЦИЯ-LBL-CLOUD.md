@@ -21,7 +21,8 @@
 ## Реферат
 
 Пояснительная записка ___ с., ___ рис., ___ табл., ___ источников, 2 прил.  
-**Приложение А** содержит **15 листингов** исходного кода (HTML, CSS, JavaScript, Python, SQL, nginx).
+**Приложение А** содержит **15 листингов** исходного кода (HTML, CSS, JavaScript, Python, SQL, nginx).  
+**Где взять файлы в репозитории GitHub:** см. `docs/ЛИСТИНГИ-ПУТИ.md` (таблица «листинг → путь»).
 
 **Ключевые слова:** ОБЛАЧНОЕ ХРАНИЛИЩЕ, ВЕБ-ПРИЛОЖЕНИЕ, ФАЙЛОВЫЙ ДИСК, HTML, CSS, JAVASCRIPT, FASTAPI, POSTGRESQL, NGINX, ДВУХФАКТОРНАЯ АУТЕНТИФИКАЦИЯ, ЗАГРУЗКА ФАЙЛОВ, ТАРИФЫ, ЛИЧНЫЙ КАБИНЕТ.
 
@@ -261,24 +262,28 @@ flowchart TB
 
 **Принцип:** браузер не обращается к файлам других пользователей напрямую; все операции идут через API с проверкой токена.
 
-### 2.3 Структура репозитория
+### 2.3 Структура репозитория (GitHub: Shivarin/LBL-Cloud)
 
-| Путь | Назначение |
-|------|------------|
-| `frontend/cloud/index.html` | Лендинг LBL Cloud |
-| `frontend/cloud/landing.css`, `landing.js` | Стили и анимации лендинга |
-| `frontend/cloud/pages/auth/` | Вход, регистрация (`auth.js`, `auth.css`) |
-| `frontend/cloud/pages/billing/` | Тарифы и оплата |
-| `frontend/cloud/pages/legal/` | Политика, соглашение |
-| `frontend/pages/file/app/index.html` | Веб-приложение «Мой диск» (`/app/`) |
-| `frontend/pages/file/js/lbl-drive.js` | Логика диска, аккаунта, навигации |
-| `frontend/pages/file/css/lbl-drive-*.css` | Стили Drive UI |
-| `frontend/js/core/api.js` | Общий клиент API (токен, login) |
-| `backend/main.py` | Точка входа FastAPI, auth, 2FA |
+| Путь в LBL-Cloud | Назначение |
+|------------------|------------|
+| `frontend/landing/index.html` | Лендинг LBL Cloud |
+| `frontend/landing/landing.css`, `landing.js` | Стили и анимации лендинга |
+| `frontend/auth/` | Вход, регистрация (`auth.js`, `auth.css`, `login.html`) |
+| `frontend/billing/` | Тарифы и оплата |
+| `frontend/legal/` | Политика, соглашение |
+| `frontend/app/index.html` | Веб-приложение «Мой диск» (`/app/`) |
+| `frontend/app/js/lbl-drive.js` | Логика диска, аккаунта, навигации |
+| `frontend/app/js/lbl-drive-upload.js` | Загрузка файлов (simple + chunked) |
+| `frontend/app/css/lbl-drive-*.css` | Стили Drive UI |
+| `frontend/shared/js/api.js` | Общий клиент API (токен, login) |
 | `backend/lbl_drive.py` | API диска `/api/drive/*` |
 | `backend/cloud_billing.py` | API `/api/cloud/billing/*` |
-| `backend/utils.py` | Письма (Cloud/Studio бренды) |
+| `backend/snippets/` | Выдержки из `main.py` и `utils.py` для листингов А.13, А.15 |
 | `backend/nginx-lbl3d-cloud.conf` | Конфиг nginx для cloud |
+| `docs/API-CLOUD.md` | Полный справочник эндпоинтов |
+| `docs/ЛИСТИНГИ-ПУТИ.md` | Соответствие листингов Приложения А файлам репозитория |
+
+На рабочем сервере те же модули лежат в монорепозитории `site` (пути `frontend/cloud/`, `frontend/pages/file/`, `backend/main.py`).
 
 ### 2.4 Проектирование пользовательского интерфейса
 
@@ -583,7 +588,7 @@ python backend/dev-serve-cloud.py
 </html>
 ```
 
-*Источник:* `frontend/cloud/index.html` (сокращено)
+*Источник:* `frontend/landing/index.html` (сокращено)
 
 ---
 
@@ -630,7 +635,7 @@ python backend/dev-serve-cloud.py
 </body>
 ```
 
-*Источник:* `frontend/pages/file/app/index.html` (фрагмент)
+*Источник:* `frontend/app/index.html` (фрагмент)
 
 ---
 
@@ -656,7 +661,7 @@ python backend/dev-serve-cloud.py
 </div>
 ```
 
-*Источник:* `frontend/cloud/pages/auth/login.html`
+*Источник:* `frontend/auth/login.html`
 
 ---
 
@@ -690,7 +695,7 @@ python backend/dev-serve-cloud.py
 })();
 ```
 
-*Источник:* `frontend/pages/file/js/lbl-drive.js` (начало модуля)
+*Источник:* `frontend/app/js/lbl-drive.js` (начало модуля)
 
 ---
 
@@ -722,7 +727,7 @@ function loadBrowse() {
 }
 ```
 
-*Источник:* `frontend/pages/file/js/lbl-drive.js`
+*Источник:* `frontend/app/js/lbl-drive.js`
 
 ---
 
@@ -754,7 +759,7 @@ function driveApiCall(method, path, body) {
 }
 ```
 
-*Источник:* `frontend/pages/file/js/lbl-drive.js`
+*Источник:* `frontend/app/js/lbl-drive.js`
 
 ---
 
@@ -798,7 +803,7 @@ function initProfileSecurity() {
 }
 ```
 
-*Источник:* `frontend/pages/file/js/lbl-drive.js` (сокращено)
+*Источник:* `frontend/app/js/lbl-drive.js` (сокращено)
 
 ---
 
@@ -843,7 +848,7 @@ $("twoFactorSubmit").addEventListener("click", function () {
 });
 ```
 
-*Источник:* `frontend/cloud/pages/auth/auth.js` (фрагменты)
+*Источник:* `frontend/auth/auth.js` (фрагменты)
 
 ---
 
@@ -882,7 +887,7 @@ $("twoFactorSubmit").addEventListener("click", function () {
 }
 ```
 
-*Источник:* `frontend/pages/file/css/lbl-drive-profile.css`, `frontend/cloud/pages/auth/auth.css`
+*Источник:* `frontend/app/css/lbl-drive-profile.css`, `frontend/auth/auth.css`
 
 ---
 
@@ -1031,7 +1036,7 @@ async def change_password(
     return {"message": "Пароль успешно изменен."}
 ```
 
-*Источник:* `backend/main.py`
+*Источник:* `backend/snippets/main_auth_2fa_excerpt.py` (фрагмент `site/backend/main.py`)
 
 ---
 
@@ -1111,7 +1116,7 @@ server {
 }
 ```
 
-*Источники:* `backend/utils.py`, `backend/nginx-lbl3d-cloud.conf` (фрагменты)
+*Источники:* `backend/snippets/utils_email_cloud_excerpt.py` (фрагмент `site/backend/utils.py`), `backend/nginx-lbl3d-cloud.conf` (фрагменты)
 
 ---
 
