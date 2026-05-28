@@ -3,6 +3,7 @@ LBL-Cloud/
 ├── ЧТО-НЕ-ВХОДИТ.txt
 ├── sync-from-site.ps1
 ├── docs/
+│   ├── API-CLOUD.md          ← все эндпоинты Cloud
 │   ├── ТЕХНИЧЕСКАЯ-ДОКУМЕНТАЦИЯ-LBL-CLOUD.md
 │   ├── CLOUD-APP-TZ.md
 │   ├── DEPLOY.md

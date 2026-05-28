@@ -17,6 +17,10 @@ foreach ($d in $dirs) {
 
 # docs
 Copy-Item (Join-Path $site "docs\*.md") (Join-Path $root "docs\") -Force -ErrorAction SilentlyContinue
+# API-CLOUD.md живёт только в LBL-Cloud — не перезаписывать из site
+if (Test-Path (Join-Path $root "docs\API-CLOUD.md")) {
+    Write-Host "  keep docs/API-CLOUD.md (repo-only)"
+}
 Copy-Item (Join-Path $site "frontend\cloud\CLOUD-APP-TZ.md") (Join-Path $root "docs\") -Force
 
 # landing (without pages subfolder)

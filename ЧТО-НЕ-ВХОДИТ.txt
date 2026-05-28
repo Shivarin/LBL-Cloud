@@ -1,16 +1,45 @@
-В эту папку НЕ копировалось (остаётся в основном репозитории site):
+В эту папку / репозиторий LBL-Cloud НЕ копировалось (остаётся в основном репозитории site):
 
-- backend/main.py — полный API LBL Studio, оператор, форум, заказы
-- backend/operator_*.py, telegram_bot.py, vk_bot.py
+=== Backend (критично для запуска API) ===
+- backend/main.py — FastAPI, вход, регистрация, 2FA, /api/me, смена пароля, webhook ЮKassa
+- backend/database.py — модели User, UserFile, UserDriveFolder, LoginHistory
+- backend/utils.py — email (бренд Cloud vs Studio)
+- backend/yookassa_client.py — платежи
+- backend/auth*.py, middleware — если вынесены отдельно
+
+=== Backend (другие продукты LBL) ===
+- operator_*.py, telegram_bot.py, vk_bot.py
+- forum, orders, chats, file_drop (студия), courier и т.д.
+
+=== Frontend ===
 - frontend/pages/operator/ — операторская панель
-- frontend/pages/auth/ на lbl3d.info (студия)
+- frontend/pages/auth/ на lbl3d.info (студия, не cloud)
+- frontend/pages/orders, forum, …
 - frontend123523/ — старые копии
-- .env, ключи ЮKassa, SMTP, JWT-секреты
-- frontend/vendor/ — шрифты (скачиваются на сервере)
-- База данных и дампы
+- frontend/vendor/ — шрифты (скачиваются на сервере скриптами)
+- frontend/assets/cloud/*.png — иконки диска (на сервере; в репо только landing/assets)
+
+=== Секреты и инфраструктура ===
+- .env, ключи ЮKassa, SMTP, JWT SECRET
+- PostgreSQL, дампы, Redis (2FA в памяти на main — в проде лучше Redis)
 - Логи (*.log)
 
-Для сдачи / портфолио достаточно содержимого LBL-Cloud + пояснительной записки в docs/.
+=== Что ЕСТЬ в репозитории (полный код модулей Cloud) ===
+- backend/lbl_drive.py — ВСЕ методы /api/drive/*
+- backend/cloud_billing.py — ВСЕ методы /api/cloud/billing/*
+- Весь фронт: landing, app, auth, billing, legal, shared/js/api.js
+
+=== Полный список API ===
+См. docs/API-CLOUD.md — таблицы всех эндпоинтов Cloud и где лежит код.
+
+Для учёбы / портфолио / GitHub: LBL-Cloud + docs/API-CLOUD.md + пояснительная записка.
 
 Обновить копию из основного проекта:
+  cd C:\site
   powershell -File LBL-Cloud\sync-from-site.ps1
+
+Залить на GitHub:
+  cd LBL-Cloud
+  git add -A
+  git commit -m "..."
+  git push
