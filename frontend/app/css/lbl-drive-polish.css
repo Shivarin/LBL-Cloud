@@ -1,0 +1,515 @@
+/* LBL Cloud — плотный минималистичный polish (поверх gdrive) */
+
+body.ld-ui-gdrive .ld-shell {
+    grid-template-columns: var(--ld-sidebar-w) minmax(0, 1fr) !important;
+}
+
+body.ld-ui-gdrive .ld-main-col {
+    background: var(--ld-surface) !important;
+}
+
+body.ld-ui-gdrive .ld-workspace {
+    max-width: none;
+    width: 100%;
+    padding: 12px 28px 40px;
+    box-sizing: border-box;
+}
+
+/* Welcome — компактная полоса */
+.ld-welcome {
+    margin-bottom: 14px;
+    padding: 16px 18px;
+    border: 1px solid var(--ld-border);
+    border-radius: 16px;
+    background: var(--ld-surface);
+    box-shadow: 0 2px 12px rgba(76, 78, 180, 0.06);
+}
+
+html[data-theme="dark"] .ld-welcome {
+    background: linear-gradient(135deg, rgba(20, 24, 36, 0.98), rgba(98, 84, 243, 0.08));
+}
+
+.ld-welcome__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ld-welcome__eyebrow {
+    margin: 0 0 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ld);
+}
+
+.ld-welcome__eyebrow i {
+    margin-right: 6px;
+}
+
+.ld-welcome h1 {
+    font-size: clamp(1.45rem, 2.4vw, 1.85rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.2;
+}
+
+.ld-welcome__cta {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.ld-welcome__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.ld-welcome__stats:empty {
+    display: none;
+    margin: 0;
+}
+
+.ld-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--ld-border);
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    color: var(--ld-muted);
+}
+
+html[data-theme="dark"] .ld-stat {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.ld-stat strong {
+    color: var(--ld-text);
+    font-weight: 700;
+}
+
+.ld-stat i {
+    color: var(--ld);
+    font-size: 14px;
+}
+
+.ld-quicklinks {
+    display: none;
+}
+
+.ld-quicklinks a,
+.ld-quicklinks button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+    color: var(--ld-text);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ld-quicklinks a:hover,
+.ld-quicklinks button:hover {
+    border-color: rgba(98, 84, 243, 0.35);
+    color: var(--ld);
+    background: var(--ld-active-bg);
+}
+
+.ld-quicklinks i {
+    color: var(--ld);
+}
+
+/* Toolbar card */
+.ld-toolbar {
+    margin-bottom: 14px;
+    padding: 14px 16px 12px;
+    border: 1px solid var(--ld-border);
+    border-radius: 16px;
+    background: var(--ld-surface);
+    box-shadow: 0 2px 12px rgba(76, 78, 180, 0.06);
+}
+
+.ld-files-section__head {
+    margin-bottom: 10px !important;
+}
+
+.ld-files-section__head h2 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ld-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ld-muted);
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--ld-soft);
+}
+
+.ld-count:empty {
+    display: none;
+}
+
+body.ld-ui-gdrive .ld-workspace__top {
+    padding: 0 0 10px !important;
+    border-bottom: 1px solid var(--ld-border);
+    margin-bottom: 10px !important;
+}
+
+body.ld-ui-gdrive .ld-filter-row {
+    margin: 0 !important;
+    gap: 6px !important;
+}
+
+/* Content panel */
+.ld-content-panel {
+    padding: 14px 16px 18px;
+    border: 1px solid var(--ld-border);
+    border-radius: 16px;
+    background: var(--ld-surface);
+    box-shadow: 0 2px 16px rgba(76, 78, 180, 0.06);
+    min-height: 0;
+}
+
+body.ld-ui-gdrive .ld-workspace__body {
+    display: block !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    text-align: left !important;
+    overflow: visible !important;
+}
+
+body.ld-ui-gdrive .ld-state {
+    text-align: center;
+}
+
+/* Сетка файлов — на всю ширину, много колонок */
+body.ld-ui-gdrive #driveGrid.ld-files,
+body.ld-ui-gdrive #driveGrid.ld-files.view-grid {
+    display: grid !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)) !important;
+    gap: 12px !important;
+    justify-content: start !important;
+    justify-items: stretch !important;
+    align-content: start !important;
+    align-items: stretch !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-grid > .ld-file {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-grid .ld-file {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+    border: 1px solid var(--ld-border) !important;
+    background: var(--ld-surface) !important;
+    overflow: hidden;
+    min-height: 140px;
+    max-height: none;
+    transition: transform 0.18s ease, box-shadow 0.18s, border-color 0.18s !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(98, 84, 243, 0.35) !important;
+    box-shadow: 0 12px 28px rgba(98, 84, 243, 0.14) !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon {
+    height: 76px !important;
+    min-height: 76px !important;
+    margin: 0;
+    background: linear-gradient(180deg, var(--ld-tone-bg, rgba(98, 84, 243, 0.08)) 0%, transparent 100%);
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon::after {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 14px !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon.has-asset {
+    height: 84px !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon.has-asset::after,
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon.has-asset::before {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__asset {
+    max-height: 56px;
+    width: auto;
+    object-fit: contain;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__body {
+    padding: 10px 12px 12px !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__name {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    -webkit-line-clamp: 2;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__meta {
+    font-size: 11px !important;
+    margin-top: 4px !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__menu {
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Типы файлов */
+.ld-file--file {
+    --ld-tone: #6254f3;
+    --ld-tone-bg: rgba(98, 84, 243, 0.14);
+}
+
+.ld-file--doc {
+    --ld-tone: #2563eb;
+    --ld-tone-bg: rgba(37, 99, 235, 0.12);
+}
+
+.ld-file--sheet {
+    --ld-tone: #16a34a;
+    --ld-tone-bg: rgba(22, 163, 74, 0.12);
+}
+
+.ld-file--slides {
+    --ld-tone: #ea580c;
+    --ld-tone-bg: rgba(234, 88, 12, 0.12);
+}
+
+.ld-file--code {
+    --ld-tone: #0891b2;
+    --ld-tone-bg: rgba(8, 145, 178, 0.12);
+}
+
+.ld-file--link {
+    --ld-tone: #7c3aed;
+    --ld-tone-bg: rgba(124, 58, 237, 0.12);
+}
+
+.ld-suggest {
+    display: none !important;
+}
+
+.ld-suggest-card__icon {
+    width: 44px !important;
+    height: 44px !important;
+    background: linear-gradient(145deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.06)) !important;
+    color: #d97706 !important;
+}
+
+/* Sidebar foot */
+body.ld-ui-gdrive .ld-plan-card {
+    background: linear-gradient(145deg, rgba(98, 84, 243, 0.08), rgba(98, 84, 243, 0.02)) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+body.ld-ui-gdrive .ld-quota {
+    display: block !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    border: 1px solid var(--ld-border) !important;
+    background: var(--ld-surface) !important;
+}
+
+body.ld-ui-gdrive .ld-quota__ring {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-quota__pct {
+    display: block !important;
+    float: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ld);
+}
+
+body.ld-ui-gdrive .ld-quota__bar {
+    clear: none;
+    margin-top: 0;
+    height: 6px !important;
+    border-radius: 999px;
+}
+
+body.ld-ui-gdrive .ld-badge {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--ld-soft);
+    color: var(--ld-dark);
+    font-weight: 600;
+}
+
+/* Pager */
+body.ld-ui-gdrive .ld-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ld-border);
+}
+
+body.ld-ui-gdrive .ld-pager__meta {
+    font-size: 13px;
+    color: var(--ld-muted);
+    font-weight: 500;
+}
+
+body.ld-ui-gdrive .ld-pager__controls {
+    display: flex;
+    gap: 6px;
+}
+
+body.ld-ui-gdrive .ld-pager__controls button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+    color: var(--ld-text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+body.ld-ui-gdrive .ld-pager__controls button:hover:not(:disabled) {
+    border-color: var(--ld);
+    color: var(--ld);
+    background: var(--ld-active-bg);
+}
+
+body.ld-ui-gdrive .ld-pager__controls button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* Empty / loading */
+body.ld-ui-gdrive .ld-state {
+    padding: 48px 20px;
+}
+
+body.ld-ui-gdrive .ld-state--empty .ld-state__hero {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 20px !important;
+}
+
+/* List view in panel */
+body.ld-ui-gdrive .ld-files.view-list {
+    border: none !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    background: var(--ld-soft);
+}
+
+body.ld-ui-gdrive .ld-table-head {
+    background: rgba(98, 84, 243, 0.06) !important;
+}
+
+#driveFilesBlock.is-hidden {
+    display: none !important;
+}
+
+@media (max-width: 960px) {
+    body.ld-ui-gdrive .ld-workspace {
+        padding: 8px 14px 28px;
+    }
+
+    .ld-welcome {
+        padding: 16px;
+    }
+
+    .ld-welcome__cta {
+        width: 100%;
+    }
+
+    .ld-welcome__cta .ld-btn {
+        flex: 1;
+    }
+
+    .ld-toolbar,
+    .ld-content-panel {
+        border-radius: 14px;
+        padding: 12px;
+    }
+}
+
+@media (min-width: 1400px) {
+    body.ld-ui-gdrive #driveGrid.ld-files.view-grid {
+        grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 600px) {
+    body.ld-ui-gdrive #driveGrid.ld-files.view-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+        gap: 8px !important;
+    }
+}
+
+/* Сброс центрирования из старого lbl-drive.css */
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon {
+    justify-content: center !important;
+}
+
+body.ld-ui-gdrive .ld-file--upload {
+    min-height: 140px !important;
+    border-style: dashed !important;
+    border-color: rgba(98, 84, 243, 0.28) !important;
+    background: rgba(98, 84, 243, 0.04) !important;
+}
+
+body.ld-ui-gdrive .ld-files-section {
+    margin-top: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-workspace {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 12px 20px 32px !important;
+}

@@ -1,0 +1,1114 @@
+/* LBL Cloud — интерфейс в духе Google Drive, брендинг LBL */
+
+/* Токены LBL Cloud — как cloud.lbl3d.info / landing.css */
+.ld-ui-gdrive {
+    --ld: #6254f3;
+    --ld-2: #7b6ef7;
+    --ld-dark: #4a36dc;
+    --ld-deep: #3b2eb8;
+    --ld-soft: #dfe5ff;
+    --ld-glow: rgba(98, 84, 243, 0.24);
+    --ld-text: #11184b;
+    --ld-muted: #60709d;
+    --ld-soft-text: #8e98c8;
+    --ld-border: rgba(93, 93, 210, 0.14);
+    --ld-surface: #ffffff;
+    --ld-bg: #eef3ff;
+    --ld-green: #18bd6b;
+    --ld-gold: #f5a400;
+    --ld-doc: #4285f4;
+    --ld-folder: #f5a400;
+    --ld-link: #6254f3;
+    --ld-sidebar-w: 240px;
+    --ld-rail-w: 56px;
+    --ld-top: 64px;
+    --ld-r: 24px;
+    --ld-r-sm: 12px;
+    --ld-active-bg: var(--ld-soft);
+    --ld-active-bar: var(--ld);
+    --ld-shadow: 0 12px 40px rgba(76, 78, 180, 0.12);
+    --font-sans: "Roboto", system-ui, sans-serif;
+    --font-display: "Montserrat", var(--font-sans);
+    padding-top: 0 !important;
+    background: var(--ld-bg) !important;
+    font-family: var(--font-sans);
+    color: var(--ld-text);
+}
+
+html[data-theme="dark"] .ld-ui-gdrive {
+    --ld-text: #e8edf7;
+    --ld-muted: #94a3b8;
+    --ld-soft-text: #7c86a8;
+    --ld-border: rgba(148, 163, 184, 0.16);
+    --ld-surface: #141824;
+    --ld-bg: #0b1220;
+    --ld-soft: rgba(98, 84, 243, 0.12);
+    --ld-active-bg: rgba(98, 84, 243, 0.16);
+    --ld-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    background: var(--ld-bg) !important;
+}
+
+.ld-ui-gdrive .ld-main-col,
+.ld-ui-gdrive .ld-sidebar,
+.ld-ui-gdrive .ld-rail {
+    background: var(--ld-surface);
+}
+
+.ld-ui-gdrive .ld-bg {
+    display: none;
+}
+
+/* Shell */
+.ld-ui-gdrive .ld-shell {
+    display: grid;
+    grid-template-columns: var(--ld-sidebar-w) minmax(0, 1fr);
+    width: 100%;
+    min-height: 100vh;
+    max-width: none;
+    padding: 0;
+    gap: 0;
+    align-items: stretch;
+}
+
+.ld-ui-gdrive .ld-main-col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--ld-surface);
+}
+
+/* Sidebar */
+.ld-ui-gdrive .ld-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 12px 16px;
+    border-right: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+}
+
+.ld-sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--ld-r-sm);
+}
+
+.ld-sidebar__brand:hover {
+    background: rgba(98, 84, 243, 0.06);
+}
+
+.ld-sidebar__logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ld-sidebar__logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.ld-sidebar__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+}
+
+.ld-sidebar__title em {
+    color: var(--ld);
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Create */
+.ld-create {
+    position: relative;
+    margin: 4px 0 8px;
+}
+
+.ld-create__btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 48px;
+    padding: 0 22px 0 18px;
+    border: none;
+    border-radius: 999px;
+    background: var(--ld-surface);
+    color: var(--ld-text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow:
+        0 1px 2px rgba(60, 64, 90, 0.12),
+        0 2px 6px rgba(60, 64, 90, 0.08);
+    transition: box-shadow 0.15s, background 0.15s;
+}
+
+.ld-create__btn:hover {
+    box-shadow:
+        0 2px 4px rgba(60, 64, 90, 0.14),
+        0 4px 12px rgba(98, 84, 243, 0.12);
+}
+
+.ld-create__btn i {
+    font-size: 18px;
+    color: var(--ld);
+}
+
+.ld-create__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 240px;
+    z-index: 200;
+    padding: 8px 0;
+    border-radius: var(--ld-r-sm);
+    border: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+    box-shadow: var(--ld-shadow);
+}
+
+.ld-create__label {
+    margin: 0;
+    padding: 6px 16px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ld-soft-text);
+}
+
+.ld-create__divider {
+    height: 1px;
+    margin: 6px 0;
+    background: var(--ld-border);
+}
+
+.ld-create__item,
+.ld-create__menu-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ld-text);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.ld-create__item i {
+    width: 22px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.ld-create__item--doc i { color: var(--ld-doc); }
+.ld-create__item--folder i { color: var(--ld-folder); }
+.ld-create__item--link i { color: var(--ld-link); }
+.ld-create__item--upload i { color: var(--ld-green); }
+.ld-create__item--plan i { color: var(--ld); }
+
+.ld-create__item:hover,
+.ld-create__menu-link:hover {
+    background: var(--ld-active-bg);
+}
+
+.ld-create__btn {
+    font-family: var(--font-display);
+}
+
+/* Nav */
+.ld-ui-gdrive .ld-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.ld-ui-gdrive .ld-nav__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 12px;
+    margin-right: 0;
+    background: transparent;
+    color: var(--ld-text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: none !important;
+}
+
+.ld-ui-gdrive .ld-nav__item.is-active {
+    background: var(--ld-active-bg);
+    color: var(--ld-dark);
+    font-weight: 600;
+}
+
+.ld-ui-gdrive .ld-nav__icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    background: none !important;
+    color: var(--ld-muted);
+    font-size: 16px;
+}
+
+.ld-ui-gdrive .ld-nav__item.is-active .ld-nav__icon {
+    color: var(--ld);
+}
+
+.ld-sidebar__foot {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--ld-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ld-ui-gdrive .ld-badge {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 12px;
+    color: var(--ld-muted);
+}
+
+.ld-ui-gdrive .ld-plan-card {
+    padding: 12px 14px;
+    border-radius: var(--ld-r);
+    border: 1px solid var(--ld-border);
+    background: rgba(98, 84, 243, 0.04);
+    box-shadow: none;
+}
+
+.ld-ui-gdrive .ld-plan-card__btn {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+    color: var(--ld);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.ld-ui-gdrive .ld-quota {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 8px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.ld-ui-gdrive .ld-quota__ring {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    width: 36px;
+    height: 36px;
+}
+
+.ld-ui-gdrive .ld-quota__pct {
+    display: none;
+}
+
+.ld-ui-gdrive .ld-quota__bar {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--ld-border);
+}
+
+.ld-ui-gdrive .ld-quota__bar span {
+    background: linear-gradient(90deg, var(--ld), var(--ld-2));
+}
+
+/* Topbar */
+.ld-ui-gdrive .ld-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px 8px 12px;
+    background: var(--ld-surface);
+    border-bottom: 1px solid transparent;
+}
+
+.ld-ui-gdrive .ld-topbar__inner {
+    display: contents;
+}
+
+.ld-sidebar-toggle {
+    display: none;
+}
+
+.ld-ui-gdrive .ld-top-search {
+    flex: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 8px 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--ld-border);
+    background: var(--ld-soft);
+    box-shadow: none;
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-top-search {
+    background: rgba(98, 84, 243, 0.08);
+}
+
+.ld-ui-gdrive .ld-top-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: var(--ld-text);
+    outline: none;
+}
+
+.ld-top-search__filter {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ld-muted);
+    cursor: pointer;
+}
+
+.ld-top-search__filter:hover {
+    background: rgba(98, 84, 243, 0.1);
+    color: var(--ld);
+}
+
+.ld-ui-gdrive .ld-topbar__end {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.ld-ui-gdrive .ld-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--ld-muted);
+}
+
+.ld-ui-gdrive .ld-icon-btn:hover {
+    background: rgba(98, 84, 243, 0.08);
+    color: var(--ld);
+}
+
+.ld-ui-gdrive .ld-icon-btn--plus {
+    background: linear-gradient(135deg, var(--ld), var(--ld-dark));
+    color: #fff;
+    box-shadow: 0 6px 16px var(--ld-glow);
+}
+
+.ld-avatar-btn {
+    display: flex;
+    padding: 4px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.ld-ui-gdrive .ld-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ld), var(--ld-2));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+}
+
+.ld-ui-gdrive .ld-profile-chip {
+    display: none;
+}
+
+/* Main */
+.ld-ui-gdrive .ld-main {
+    flex: 1;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: var(--ld-surface) !important;
+    overflow: visible;
+}
+
+.ld-ui-gdrive .ld-workspace {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 8px 24px 48px;
+    box-sizing: border-box;
+}
+
+.ld-welcome {
+    padding: 20px 0 8px;
+}
+
+.ld-welcome h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ld-text);
+}
+
+.ld-welcome p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--ld-muted);
+}
+
+/* Suggested folders */
+.ld-suggest {
+    margin: 20px 0 8px;
+}
+
+.ld-suggest__head h2,
+.ld-files-section__head h2 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ld-text);
+}
+
+.ld-suggest__row {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+}
+
+.ld-suggest-card {
+    flex: 0 0 168px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 14px 12px;
+    border: 1px solid var(--ld-border);
+    border-radius: var(--ld-r);
+    background: var(--ld-surface);
+    cursor: pointer;
+    text-align: left;
+    transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.ld-suggest-card:hover {
+    border-color: rgba(98, 84, 243, 0.35);
+    box-shadow: 0 2px 8px rgba(98, 84, 243, 0.1);
+}
+
+.ld-suggest-card__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(98, 84, 243, 0.1);
+    color: var(--ld);
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+.ld-suggest-card__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ld-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ld-suggest-card__meta {
+    font-size: 12px;
+    color: var(--ld-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ld-suggest-card__menu {
+    align-self: flex-end;
+    margin-top: -28px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ld-muted);
+    cursor: pointer;
+    opacity: 0;
+}
+
+.ld-suggest-card:hover .ld-suggest-card__menu {
+    opacity: 1;
+}
+
+/* Files section */
+.ld-files-section {
+    margin-top: 24px;
+}
+
+.ld-files-section__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.ld-ui-gdrive .ld-workspace__tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ld-ui-gdrive .ld-workspace__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0 12px;
+    margin: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+.ld-ui-gdrive .ld-workspace__top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ld-ui-gdrive .ld-path button {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ld-muted);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.ld-ui-gdrive .ld-path button:hover {
+    background: var(--ld-active-bg);
+    color: var(--ld);
+}
+
+.ld-ui-gdrive .ld-path button.is-root {
+    color: var(--ld-text);
+    font-weight: 600;
+}
+
+.ld-ui-gdrive .ld-search {
+    min-width: 160px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+}
+
+.ld-ui-gdrive .ld-filter-row {
+    margin: 0 0 12px;
+    padding: 0;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ld-ui-gdrive .ld-filter-row button {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--ld-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.ld-ui-gdrive .ld-filter-row button.is-active {
+    background: var(--ld-active-bg);
+    color: var(--ld-dark);
+}
+
+.ld-ui-gdrive .ld-workspace__body {
+    padding: 0 !important;
+}
+
+/* List / table */
+.ld-ui-gdrive .ld-files.view-list {
+    display: block;
+    border: 1px solid var(--ld-border);
+    border-radius: var(--ld-r-sm);
+    overflow: hidden;
+}
+
+.ld-table-head {
+    display: grid;
+    grid-template-columns: minmax(200px, 2.2fr) minmax(140px, 1.4fr) minmax(120px, 1fr) minmax(120px, 1fr) 40px;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #f8f9fc;
+    border-bottom: 1px solid var(--ld-border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ld-muted);
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-table-head {
+    background: #1a1d2a;
+}
+
+.ld-table-head span:last-child {
+    text-align: right;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file {
+    display: grid;
+    grid-template-columns: minmax(200px, 2.2fr) minmax(140px, 1.4fr) minmax(120px, 1fr) minmax(120px, 1fr) 40px;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid var(--ld-border);
+    border-radius: 0;
+    background: var(--ld-surface);
+    box-shadow: none !important;
+    animation: none !important;
+    min-height: 52px;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file:last-child {
+    border-bottom: none;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file:hover {
+    background: var(--ld-active-bg);
+    transform: none;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file.is-selected {
+    background: rgba(98, 84, 243, 0.08);
+    box-shadow: inset 3px 0 0 var(--ld) !important;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__icon {
+    width: 32px;
+    height: 32px;
+    min-height: 0;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__body {
+    display: contents;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    grid-column: 1;
+    min-width: 0;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__name > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__name .ld-file__icon {
+    flex-shrink: 0;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__name::before {
+    content: none;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__meta {
+    display: none;
+}
+
+.ld-ui-gdrive .ld-file__reason,
+.ld-ui-gdrive .ld-file__owner,
+.ld-ui-gdrive .ld-file__folder {
+    font-size: 13px;
+    color: var(--ld-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ld-ui-gdrive .ld-file__owner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ld-ui-gdrive .ld-file__owner-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ld), var(--ld-2));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.ld-ui-gdrive .ld-file__folder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__badges {
+    display: none;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file__menu {
+    position: static;
+    opacity: 0;
+    grid-column: 5;
+    justify-self: end;
+}
+
+.ld-ui-gdrive .ld-files.view-list .ld-file:hover .ld-file__menu {
+    opacity: 1;
+}
+
+/* Grid view — см. lbl-drive-polish.css (#driveGrid) */
+
+.ld-ui-gdrive .ld-files.view-grid .ld-file__reason,
+.ld-ui-gdrive .ld-files.view-grid .ld-file__owner,
+.ld-ui-gdrive .ld-files.view-grid .ld-file__folder {
+    display: none;
+}
+
+/* Right rail */
+.ld-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 6px;
+    border-left: 1px solid var(--ld-border);
+    background: var(--ld-surface);
+}
+
+.ld-rail__item {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ld-muted);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ld-rail__item:hover {
+    background: var(--ld-active-bg);
+    color: var(--ld);
+}
+
+.ld-rail__spacer {
+    flex: 1;
+}
+
+.ld-rail__item--plus {
+    border: 1px dashed var(--ld-border);
+}
+
+/* Hidden legacy (не .ld-security-card в аккаунте — там 2FA и пароль) */
+.ld-ui-gdrive .ld-command,
+.ld-ui-gdrive .ld-cloud-actions,
+.ld-ui-gdrive .ld-quick,
+.ld-ui-gdrive .ld-topbar__links,
+.ld-ui-gdrive .ld-brand,
+.ld-ui-gdrive .ld-panel__head {
+    display: none !important;
+}
+
+.ld-ui-gdrive .ld-panel--uploads {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 320px;
+    max-height: 50vh;
+    z-index: 500;
+    border-radius: var(--ld-r);
+    box-shadow: 0 12px 40px rgba(30, 32, 60, 0.18);
+}
+
+.ld-ui-gdrive.is-profile-mode .ld-suggest,
+.ld-ui-gdrive.is-profile-mode .ld-files-section__head,
+.ld-ui-gdrive.is-profile-mode .ld-workspace__top,
+.ld-ui-gdrive.is-profile-mode .ld-filter-row,
+.ld-ui-gdrive.is-profile-mode #driveContent {
+    display: none !important;
+}
+
+.ld-ui-gdrive .ld-workspace.is-profile-mode .ld-welcome {
+    display: none;
+}
+
+/* Profile in v2 */
+.ld-ui-gdrive .ld-profile {
+    padding: 0;
+}
+
+.ld-ui-gdrive .ld-selection-bar {
+    margin-bottom: 12px;
+    border-radius: var(--ld-r-sm);
+    border: 1px solid var(--ld-border);
+}
+
+.ld-ui-gdrive .ld-btn--primary {
+    background: linear-gradient(135deg, var(--ld), var(--ld-dark));
+    border: none;
+    box-shadow: 0 4px 14px var(--ld-glow);
+}
+
+.ld-ui-gdrive .ld-seg button {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--ld-muted);
+}
+
+.ld-ui-gdrive .ld-seg button.is-active {
+    background: var(--ld-active-bg);
+    color: var(--ld);
+}
+
+/* Mobile */
+@media (max-width: 960px) {
+    .ld-ui-gdrive .ld-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .ld-ui-gdrive .ld-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 300;
+        width: min(280px, 88vw);
+        transform: translateX(-105%);
+        transition: transform 0.22s var(--ld-ease, ease);
+        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .ld-ui-gdrive.is-sidebar-open .ld-sidebar {
+        transform: translateX(0);
+    }
+
+    .ld-sidebar-toggle {
+        display: grid;
+    }
+
+    .ld-rail {
+        display: none;
+    }
+
+    .ld-ui-gdrive .ld-workspace {
+        padding: 8px 16px 32px;
+    }
+
+    .ld-table-head,
+    .ld-ui-gdrive .ld-files.view-list .ld-file {
+        grid-template-columns: minmax(0, 1fr) 40px;
+    }
+
+    .ld-table-head span:nth-child(2),
+    .ld-table-head span:nth-child(3),
+    .ld-table-head span:nth-child(4),
+    .ld-ui-gdrive .ld-file__reason,
+    .ld-ui-gdrive .ld-file__owner,
+    .ld-ui-gdrive .ld-file__folder {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .ld-ui-gdrive .ld-top-search {
+        max-width: none;
+    }
+
+    .ld-welcome h1 {
+        font-size: 1.35rem;
+    }
+
+    .ld-suggest-card {
+        flex: 0 0 140px;
+    }
+}
+
+.fa-circle-question::before {
+    content: "?";
+}
+
+/* --- Сброс старого lbl-drive.css (glass, hero, fixed topbar) --- */
+body.ld-ui-gdrive.lbl-drive-app {
+    padding-top: 0 !important;
+    background: var(--ld-bg) !important;
+}
+
+body.ld-ui-gdrive .ld-layout {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-topbar {
+    position: sticky !important;
+    inset: auto !important;
+    z-index: 100 !important;
+    padding: 8px 20px 8px 12px !important;
+    background: var(--ld-surface) !important;
+    border-bottom: 1px solid var(--ld-border) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+body.ld-ui-gdrive .ld-topbar__inner {
+    display: contents !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+body.ld-ui-gdrive .ld-panel,
+body.ld-ui-gdrive .ld-panel--nav,
+body.ld-ui-gdrive .ld-panel--main,
+body.ld-ui-gdrive .ld-sidebar {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+body.ld-ui-gdrive .ld-panel--main,
+body.ld-ui-gdrive .ld-main.ld-panel--main {
+    background: var(--ld-surface) !important;
+    background-image: none !important;
+    min-height: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-panel--main::before,
+body.ld-ui-gdrive .ld-panel--nav::before,
+body.ld-ui-gdrive .ld-panel--uploads::before {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-workspace {
+    min-height: 0 !important;
+    flex: 1 !important;
+}
+
+body.ld-ui-gdrive .ld-filter-row {
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-filter-row button {
+    height: 32px !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    transform: none !important;
+    font-weight: 500 !important;
+    color: var(--ld-muted) !important;
+}
+
+body.ld-ui-gdrive .ld-filter-row button.is-active {
+    background: var(--ld-active-bg) !important;
+    color: var(--ld-dark) !important;
+}
+
+body.ld-ui-gdrive .ld-command,
+body.ld-ui-gdrive .ld-cloud-actions,
+body.ld-ui-gdrive .ld-bg__aurora,
+body.ld-ui-gdrive .ld-bg__clouds {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-seg {
+    padding: 2px !important;
+    border-radius: 8px !important;
+    background: var(--ld-soft) !important;
+    border: 1px solid var(--ld-border) !important;
+}
+
+body.ld-ui-gdrive .ld-seg button.is-active {
+    background: var(--ld-surface) !important;
+    color: var(--ld) !important;
+    box-shadow: 0 1px 3px rgba(76, 78, 180, 0.12) !important;
+}

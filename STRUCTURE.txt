@@ -1,0 +1,23 @@
+LBL-Cloud/
+├── README.md
+├── ЧТО-НЕ-ВХОДИТ.txt
+├── sync-from-site.ps1
+├── docs/
+│   ├── ТЕХНИЧЕСКАЯ-ДОКУМЕНТАЦИЯ-LBL-CLOUD.md
+│   ├── CLOUD-APP-TZ.md
+│   ├── DEPLOY.md
+│   └── ...
+├── frontend/
+│   ├── landing/          → cloud.lbl3d.info /
+│   ├── app/              → /app/
+│   │   ├── index.html
+│   │   ├── css/
+│   │   └── js/
+│   ├── auth/             → /pages/auth/
+│   ├── billing/          → /pages/billing/
+│   ├── legal/            → /pages/legal/
+│   └── shared/js/api.js
+└── backend/
+    ├── lbl_drive.py      → /api/drive/*
+    ├── cloud_billing.py  → /api/cloud/billing/*
+    └── nginx, deploy scripts

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#eef3ff">
+    <title>LBL Cloud | Ваше облако. Ваши правила.</title>
+    <meta name="description" content="LBL Cloud - личное облачное хранилище с 5 ГБ бесплатно, папками, быстрыми загрузками и доступом с любого устройства.">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+    <link rel="stylesheet" href="/vendor/fonts/fonts.css?v=5">
+    <link rel="stylesheet" href="landing.css?v=15">
+</head>
+<body class="cloud-page">
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7.5 18.5h9a4.5 4.5 0 0 0 .5-8.97 6 6 0 0 0-11.25 1.9A3.6 3.6 0 0 0 7.5 18.5Z"/>
+        </symbol>
+        <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17V5m0 0 4.5 4.5M12 5 7.5 9.5"/>
+            <path d="M5 19h14"/>
+        </symbol>
+        <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 7.5a2 2 0 0 1 2-2h4.1l2 2H18a2.5 2.5 0 0 1 2.5 2.5v6.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/>
+        </symbol>
+        <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 3.5h6l4 4v13H7Z"/>
+            <path d="M13 3.5v4h4"/>
+        </symbol>
+        <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3 7 4v10l-7 4-7-4V7Z"/>
+            <path d="m5 7 7 4 7-4M12 11v10"/>
+        </symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 19 6v5.2c0 4.5-2.8 7.6-7 9.3-4.2-1.7-7-4.8-7-9.3V6Z"/>
+        </symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 10V8a5 5 0 0 1 10 0v2"/>
+            <path d="M5.5 10h13v10h-13Z"/>
+            <path d="M12 14v2.5"/>
+        </symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2.8 5 13h6l-1 8.2L19 10h-6Z"/>
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 12.5 4.2 4.1L19 7"/>
+        </symbol>
+        <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3.5 2.55 5.2 5.75.82-4.15 4.05.98 5.72L12 16.58l-5.13 2.7.98-5.7L3.7 9.52l5.75-.83Z"/>
+        </symbol>
+        <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.5 3.5 3.5 11l7 2.5 2.5 7Z"/>
+            <path d="m10.5 13.5 4.5-4.5"/>
+        </symbol>
+        <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
+            <path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/>
+            <path d="M16 11a3 3 0 1 0-.1-6"/>
+            <path d="M17.5 14.5A5.3 5.3 0 0 1 21.2 20"/>
+        </symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+            <path d="M3.5 12h17M12 3.2c2.2 2.4 3.3 5.3 3.3 8.8S14.2 18.4 12 20.8C9.8 18.4 8.7 15.5 8.7 12S9.8 5.6 12 3.2Z"/>
+        </symbol>
+    </svg>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+    <div class="page-light" aria-hidden="true"></div>
+    <div class="cloudscape" aria-hidden="true">
+        <span class="cloud cloud-a"></span>
+        <span class="cloud cloud-b"></span>
+        <span class="cloud cloud-c"></span>
+        <span class="cloud cloud-d"></span>
+        <span class="orb orb-a"></span>
+        <span class="orb orb-b"></span>
+        <span class="crystal crystal-a"></span>
+        <span class="crystal crystal-b"></span>
+    </div>
+
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <a class="brand" href="#top" aria-label="LBL Cloud">
+                <span class="brand-mark"><img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="38" height="38"></span>
+                <span class="brand-name">LBL<span>Cloud</span></span>
+            </a>
+            <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
+                <a href="#features">Возможности</a>
+                <a href="#demo">Как работает</a>
+                <a href="#compare">Сравнение</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <div class="header-actions">
+                <a class="btn btn-light btn-small" href="/pages/auth/login.html?return=https%3A%2F%2Fcloud.lbl3d.info%2Fapp%2F">Войти</a>
+                <a class="btn btn-primary btn-small" href="#" data-lc-register>Начать бесплатно</a>
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="hero section-pad">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <div class="pill-row">
+                        <span class="pill"><span class="status-dot"></span>Облако для ваших файлов</span>
+                        <span class="pill pill-soft">5 ГБ бесплатно</span>
+                    </div>
+                    <h1>Ваше облако.<span>Ваши правила.</span></h1>
+                    <p class="hero-lead">
+                        Личный диск с папками и быстрой загрузкой. Отдельный сервис LBL Cloud — храните, делитесь и работайте с файлами без лишних отвлечений.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary btn-large" href="#" data-lc-register>
+                            <svg><use href="#i-send"></use></svg>
+                            Получить 5 ГБ бесплатно
+                        </a>
+                        <a class="btn btn-glass btn-large" href="/app/">
+                            <svg><use href="#i-folder"></use></svg>
+                            Открыть диск
+                        </a>
+                    </div>
+                    <ul class="mini-stats">
+                        <li>
+                            <strong>5 <span>ГБ</span></strong>
+                            <small>бесплатно</small>
+                        </li>
+                        <li>
+                            <strong>∞</strong>
+                            <small>папок</small>
+                        </li>
+                        <li>
+                            <strong>1 <span>ГБ</span></strong>
+                            <small>на файл</small>
+                        </li>
+                        <li>
+                            <strong>4×</strong>
+                            <small>параллельно</small>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hero-visual reveal reveal-delay" id="heroVisual">
+                    <div class="hero-micro-clouds" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="hero-file-orbit" aria-hidden="true">
+                        <span><svg><use href="#i-file"></use></svg>STL</span>
+                        <span><svg><use href="#i-folder"></use></svg>ZIP</span>
+                        <span><svg><use href="#i-cloud"></use></svg>SYNC</span>
+                    </div>
+                    <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="app-window app-window-hero" id="heroWindow">
+                        <div class="window-top">
+                            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                        </div>
+                        <div class="drive-layout">
+                            <aside class="drive-sidebar">
+                                <div class="side-brand"><svg><use href="#i-cloud"></use></svg>LBL Cloud</div>
+                                <a class="side-item active"><svg><use href="#i-folder"></use></svg>Мой диск</a>
+                                <a class="side-item"><svg><use href="#i-file"></use></svg>Архивы</a>
+                                <a class="side-item"><svg><use href="#i-upload"></use></svg>Загрузки</a>
+                                <a class="side-item"><svg><use href="#i-shield"></use></svg>Избранное</a>
+                                <div class="storage-meter"><span></span></div>
+                                <small>1.6 / 5 ГБ</small>
+                            </aside>
+                            <div class="drive-main">
+                                <div class="drive-toolbar">
+                                    <strong>Мой диск</strong>
+                                    <button type="button"><svg><use href="#i-upload"></use></svg>Загрузить</button>
+                                </div>
+                                <div class="file-grid">
+                                    <div class="file-tile folder"><svg><use href="#i-folder"></use></svg><span>Проекты</span><small>12 файлов</small></div>
+                                    <div class="file-tile"><svg><use href="#i-file"></use></svg><span>архив.zip</span><small>1.2 ГБ</small></div>
+                                    <div class="file-tile"><svg><use href="#i-cube"></use></svg><span>model.stl</span><small>95 МБ</small></div>
+                                    <div class="file-tile upload-zone"><svg><use href="#i-upload"></use></svg><span>Drop zone</span><small>Перетащите файлы</small></div>
+                                </div>
+                            </div>
+                            <aside class="upload-dock">
+                                <div class="dock-title"><svg><use href="#i-upload"></use></svg>Загрузки</div>
+                                <div class="dock-row"><span>model.stl</span><i></i><b></b></div>
+                                <div class="dock-row done"><span>чертёж.pdf</span><i></i><b></b></div>
+                            </aside>
+                        </div>
+                        <div class="speed-strip">
+                            <span><svg><use href="#i-bolt"></use></svg>Быстро</span>
+                            <i>Передача файлов на максимальной скорости</i>
+                            <strong id="speedValue">120 МБ/с</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <ul class="feature-chips reveal">
+                <li>
+                    <span><svg><use href="#i-lock"></use></svg></span>
+                    <div><strong>Защищено</strong><small>Шифрование на уровне банков</small></div>
+                </li>
+                <li>
+                    <span><svg><use href="#i-bolt"></use></svg></span>
+                    <div><strong>Быстро</strong><small>Загрузка без ограничений</small></div>
+                </li>
+                <li>
+                    <span><svg><use href="#i-shield"></use></svg></span>
+                    <div><strong>Надёжно</strong><small>99.99% uptime</small></div>
+                </li>
+                <li>
+                    <span><svg><use href="#i-cloud"></use></svg></span>
+                    <div><strong>Доступно</strong><small>На любом устройстве</small></div>
+                </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="detail-section" id="demo">
+            <div class="container">
+                <div class="glass-band detail-grid reveal">
+                    <img class="detail-bg-art" src="/cloud/assets/detail-wide-scene.png" alt="" loading="lazy" aria-hidden="true" onerror="this.hidden=true">
+                    <div class="section-copy">
+                        <span class="eyebrow">Ваш контент под контролем</span>
+                        <h2>Удобство в каждой детали</h2>
+                        <p>Загружайте, храните, делитесь и управляйте файлами без ограничений. Всё, что нужно, в одном пространстве.</p>
+                        <ul class="icon-list">
+                            <li><svg><use href="#i-upload"></use></svg>Мгновенная загрузка файлов</li>
+                            <li><svg><use href="#i-folder"></use></svg>Удобные папки и сортировка</li>
+                            <li><svg><use href="#i-file"></use></svg>Превью для 50+ форматов</li>
+                            <li><svg><use href="#i-users"></use></svg>Ссылки с настройкой доступа</li>
+                        </ul>
+                    </div>
+                    <div class="upload-showcase" role="img" aria-label="Демонстрация загрузки файлов">
+                        <div class="scene-cloudlets" aria-hidden="true">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="scene-sparks" aria-hidden="true">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class="motion-rings" aria-hidden="true"><span></span><span></span></div>
+                        <div class="glass-cube cube-left"><svg><use href="#i-cloud"></use></svg></div>
+                        <div class="glass-cube cube-right"><svg><use href="#i-bolt"></use></svg></div>
+                        <div class="glass-float glass-file-a" aria-hidden="true">
+                            <svg><use href="#i-folder"></use></svg>
+                            <span></span>
+                        </div>
+                        <div class="glass-float glass-file-b" aria-hidden="true">
+                            <svg><use href="#i-file"></use></svg>
+                            <span></span>
+                        </div>
+                        <div class="live-upload-card">
+                            <div class="live-upload-card__top">
+                                <strong>Загрузка</strong>
+                                <span>120 МБ/с</span>
+                            </div>
+                            <div class="live-progress"><i></i></div>
+                            <small>2 файла синхронизируются</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" id="features">
+            <div class="container">
+                <div class="glass-band stats-band kinetic-band reveal">
+                    <div class="section-copy compact">
+                        <span class="eyebrow">LBL Cloud в цифрах</span>
+                        <h2>Доверяют тысячи пользователей</h2>
+                    </div>
+                    <ul class="big-stats">
+                        <li><strong data-count="124231">124 231+</strong><span>Пользователей</span></li>
+                        <li><strong>8.7 ПБ+</strong><span>Данных загружено</span></li>
+                        <li><strong>99.99%</strong><span>Доступность сервиса</span></li>
+                        <li><strong>150+</strong><span>Стран используют</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="compare-section" id="compare">
+            <div class="container">
+                <div class="glass-band compare-grid kinetic-band reveal">
+                    <div class="section-copy compact">
+                        <span class="eyebrow">Почему выбирают</span>
+                        <h2>Почему выбирают LBL Cloud?</h2>
+                    </div>
+                    <div class="compare-table" role="table" aria-label="Сравнение LBL Cloud с другими сервисами">
+                        <div class="compare-row compare-head" role="row">
+                            <span role="columnheader">Возможности</span>
+                            <strong role="columnheader">LBL Cloud</strong>
+                            <span role="columnheader">Другие сервисы</span>
+                        </div>
+                        <div class="compare-row" role="row"><span>Личный диск</span><strong><svg><use href="#i-check"></use></svg></strong><span>Ограниченно</span></div>
+                        <div class="compare-row" role="row"><span>Загрузка без ограничений</span><strong><svg><use href="#i-check"></use></svg></strong><span>Ограниченно</span></div>
+                        <div class="compare-row" role="row"><span>Размер файла до 1 ГБ</span><strong><svg><use href="#i-check"></use></svg></strong><span>100-250 МБ</span></div>
+                        <div class="compare-row" role="row"><span>Шифрование данных</span><strong><svg><use href="#i-check"></use></svg></strong><span>Не всегда</span></div>
+                        <div class="compare-row" role="row"><span>Скорость загрузки</span><strong>120 МБ/с</strong><span>10-30 МБ/с</span></div>
+                        <div class="compare-row" role="row"><span>Ваши правила. Ваши файлы.</span><strong><svg><use href="#i-check"></use></svg></strong><span>Реклама и ограничения</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="glass-band pricing-grid kinetic-band reveal">
+                    <div class="section-copy compact">
+                        <span class="eyebrow">Простые тарифы</span>
+                        <h2>Выберите свой тариф</h2>
+                        <div class="billing-toggle" role="group" aria-label="Период оплаты">
+                            <button class="active" type="button" data-billing="month">Месяц</button>
+                            <button type="button" data-billing="year">Год</button>
+                            <span>-30%</span>
+                        </div>
+                    </div>
+                    <div class="price-cards">
+                        <article class="price-card">
+                            <h3>Бесплатный</h3>
+                            <p><strong>5 <span>ГБ</span></strong>Для старта</p>
+                            <ul>
+                                <li><svg><use href="#i-check"></use></svg>5 ГБ хранилища</li>
+                                <li><svg><use href="#i-check"></use></svg>1 ГБ на файл</li>
+                                <li><svg><use href="#i-check"></use></svg>Базовая поддержка</li>
+                            </ul>
+                            <a class="btn btn-outline" href="/pages/billing/">Тарифы</a>
+                        </article>
+                        <article class="price-card popular">
+                            <div class="badge">Популярный</div>
+                            <h3>Pro</h3>
+                            <p><strong>200 <span>ГБ+</span></strong>Для личного и рабочего</p>
+                            <ul>
+                                <li><svg><use href="#i-check"></use></svg>200 ГБ хранилища</li>
+                                <li><svg><use href="#i-check"></use></svg>1 ГБ на файл</li>
+                                <li><svg><use href="#i-check"></use></svg>Приоритетная поддержка</li>
+                                <li><svg><use href="#i-check"></use></svg>Без рекламы</li>
+                            </ul>
+                            <div class="price"><span data-price data-month="299 ₽" data-year="249 ₽">299 ₽</span> / месяц</div>
+                            <a class="btn btn-primary" href="/pages/billing/">Выбрать Pro</a>
+                        </article>
+                        <article class="price-card">
+                            <h3>Team</h3>
+                            <p><strong>2 <span>ТБ</span></strong>Для команды</p>
+                            <ul>
+                                <li><svg><use href="#i-check"></use></svg>2 ТБ хранилища</li>
+                                <li><svg><use href="#i-check"></use></svg>1 ГБ на файл</li>
+                                <li><svg><use href="#i-check"></use></svg>Совместный доступ</li>
+                                <li><svg><use href="#i-check"></use></svg>Приоритетная поддержка</li>
+                            </ul>
+                            <div class="price"><span data-price data-month="799 ₽" data-year="669 ₽">799 ₽</span> / месяц</div>
+                            <a class="btn btn-outline" href="#" data-lc-cta>Выбрать Team</a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews-section">
+            <div class="container">
+                <div class="glass-band reviews-grid kinetic-band reveal">
+                    <div class="section-copy compact">
+                        <span class="eyebrow">Отзывы пользователей</span>
+                        <h2>Нам доверяют</h2>
+                    </div>
+                    <div class="review-cards">
+                        <article>
+                            <div class="avatar avatar-a"></div>
+                            <h3>Алексей П.</h3>
+                            <p>Очень удобный сервис. Скорость и простота на высоте.</p>
+                            <div class="stars"><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg></div>
+                        </article>
+                        <article>
+                            <div class="avatar avatar-b"></div>
+                            <h3>Мария И.</h3>
+                            <p>Храню здесь все проекты. Надёжно и безопасно.</p>
+                            <div class="stars"><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg></div>
+                        </article>
+                        <article>
+                            <div class="avatar avatar-c"></div>
+                            <h3>Дмитрий С.</h3>
+                            <p>Перешёл с другого сервиса. Разница колоссальная.</p>
+                            <div class="stars"><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg></div>
+                        </article>
+                        <article>
+                            <div class="avatar avatar-d"></div>
+                            <h3>Екатерина М.</h3>
+                            <p>Интерфейс простой, всё интуитивно.</p>
+                            <div class="stars"><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg></div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-cta">
+            <div class="container">
+                <div class="cta-banner reveal">
+                    <span class="cta-cloud cta-cloud-left"><svg><use href="#i-upload"></use></svg></span>
+                    <div>
+                        <h2>Ваше облако ждёт вас</h2>
+                        <p>Создайте аккаунт и получите 5 ГБ бесплатно</p>
+                    </div>
+                    <a class="btn btn-primary" href="#" data-lc-register>Начать бесплатно</a>
+                    <span class="cta-cloud cta-cloud-right"><svg><use href="#i-bolt"></use></svg></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="faq">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a class="brand" href="#top">
+                    <span class="brand-mark"><img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="38" height="38"></span>
+                    <span class="brand-name">LBL<span>Cloud</span></span>
+                </a>
+                <p>Безопасное облачное хранилище для ваших файлов. Ваше облако. Ваши правила.</p>
+            </div>
+            <nav aria-label="Продукт">
+                <strong>Продукт</strong>
+                <a href="#features">Возможности</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="#compare">Безопасность</a>
+                <a href="#demo">Скорость</a>
+            </nav>
+            <nav aria-label="Сервис">
+                <strong>Сервис</strong>
+                <a href="/app/">Мой диск</a>
+                <a href="/pages/auth/login.html?return=https%3A%2F%2Fcloud.lbl3d.info%2Fapp%2F">Вход</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="mailto:support@lbl3d.help">Контакты</a>
+            </nav>
+            <nav aria-label="Поддержка">
+                <strong>Поддержка</strong>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:support@lbl3d.help">Помощь</a>
+                <a href="mailto:support@lbl3d.help">Обратная связь</a>
+            </nav>
+            <nav class="socials" aria-label="Социальные сети">
+                <strong>Мы в сети</strong>
+                <div>
+                    <a href="https://t.me/" aria-label="Telegram"><svg><use href="#i-send"></use></svg></a>
+                    <a href="https://vk.com/" aria-label="VK">vk</a>
+                    <a href="https://x.com/" aria-label="X">x</a>
+                    <a href="https://youtube.com/" aria-label="YouTube">▶</a>
+                </div>
+            </nav>
+        </div>
+        <div class="container footer-bottom">
+            <span>&copy; 2024 LBL Cloud. Все права защищены.</span>
+            <a href="/pages/legal/privacy.html">Политика конфиденциальности</a>
+            <a href="/pages/legal/terms.html">Пользовательское соглашение</a>
+        </div>
+    </footer>
+
+    <script src="landing.js?v=14"></script>
+</body>
+</html>

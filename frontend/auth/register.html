@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#eef6ff">
+    <title>Регистрация — LBL Cloud</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/cloud/lbl-cloud-mark.svg">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="auth.css?v=3">
+</head>
+<body class="lc-auth" data-auth-page="register">
+    <main class="lc-auth-shell lc-auth-shell--register">
+        <section class="lc-auth-card" aria-labelledby="authTitle">
+            <a href="/" class="lc-auth-brand" aria-label="LBL Cloud">
+                <img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="44" height="44">
+                <span>LBL<em>Cloud</em></span>
+            </a>
+
+            <div class="lc-auth-heading">
+                <span class="lc-auth-kicker"><i class="fas fa-user-plus"></i> Новый Cloud ID</span>
+                <h1 id="authTitle">Создать аккаунт</h1>
+                <p>После регистрации Cloud сразу откроет личный диск и стартовый лимит хранения.</p>
+            </div>
+
+            <form class="lc-auth-form" id="cloudRegisterForm" novalidate>
+                <div class="lc-auth-grid">
+                    <label class="lc-field">
+                        <span>Имя</span>
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="first_name" autocomplete="given-name" placeholder="Алексей" required>
+                    </label>
+                    <label class="lc-field">
+                        <span>Фамилия</span>
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="last_name" autocomplete="family-name" placeholder="Петров" required>
+                    </label>
+                </div>
+
+                <label class="lc-field">
+                    <span>Email</span>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" autocomplete="email" placeholder="name@example.com" required>
+                </label>
+
+                <label class="lc-field">
+                    <span>Пароль</span>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" autocomplete="new-password" placeholder="Минимум 8 символов" required minlength="8">
+                    <button type="button" class="lc-field__toggle" data-toggle-password aria-label="Показать пароль">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </label>
+
+                <label class="lc-field">
+                    <span>Повтор пароля</span>
+                    <i class="fas fa-shield-halved"></i>
+                    <input type="password" name="password_confirm" autocomplete="new-password" placeholder="Повторите пароль" required minlength="8">
+                    <button type="button" class="lc-field__toggle" data-toggle-password aria-label="Показать пароль">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </label>
+
+                <div class="lc-password-meter" aria-hidden="true">
+                    <span id="passwordMeter"></span>
+                </div>
+
+                <label class="lc-check lc-check--wide" for="cloudTerms">
+                    <input type="checkbox" name="terms" id="cloudTerms" required>
+                    <span>Я даю согласие на <strong>обработку персональных данных</strong> в соответствии с
+                        <a href="https://lbl3d.info/pages/public/privacy" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>
+                        и принимаю
+                        <a href="https://lbl3d.info/pages/public/terms" target="_blank" rel="noopener noreferrer">условия использования</a>
+                        сервисов LBL (152-ФЗ)</span>
+                </label>
+                <p class="lc-consent-note">Юридические документы размещены на основном сайте <a href="https://lbl3d.info" target="_blank" rel="noopener noreferrer">lbl3d.info</a>. Cloud ID — единый аккаунт LBL Cloud и LBL Studio.</p>
+
+                <p class="lc-auth-status" id="authStatus" aria-live="polite"></p>
+
+                <button type="submit" class="lc-auth-submit">
+                    <i class="fas fa-cloud"></i>
+                    <span>Создать Cloud ID</span>
+                </button>
+            </form>
+
+            <div class="lc-auth-switch">
+                <span>Уже есть аккаунт?</span>
+                <a href="login.html">Войти в Cloud</a>
+            </div>
+        </section>
+
+        <aside class="lc-auth-side" aria-label="Преимущества LBL Cloud">
+            <div class="lc-auth-side__top">
+                <span><i class="fas fa-database"></i> 5 ГБ</span>
+                <span><i class="fas fa-shield-halved"></i> Единый профиль</span>
+            </div>
+            <div class="lc-cloud-preview lc-cloud-preview--register" aria-hidden="true">
+                <div class="lc-cloud-preview__header">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="lc-cloud-preview__row is-main">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    <strong>Загрузка готова</strong>
+                    <em>Cloud</em>
+                </div>
+                <div class="lc-cloud-preview__row">
+                    <i class="fas fa-gift"></i>
+                    <strong>Бесплатный тариф</strong>
+                    <em>активен</em>
+                </div>
+                <div class="lc-cloud-preview__row">
+                    <i class="fas fa-link"></i>
+                    <strong>Ссылки доступа</strong>
+                    <em>в профиле</em>
+                </div>
+            </div>
+            <div class="lc-auth-metrics">
+                <article><strong>1</strong><span>аккаунт LBL</span></article>
+                <article><strong>5 ГБ</strong><span>на старте</span></article>
+                <article><strong>SSL</strong><span>защита</span></article>
+            </div>
+        </aside>
+    </main>
+
+    <div class="lc-modal" id="authModal" aria-hidden="true">
+        <div class="lc-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+            <button type="button" class="lc-modal__close" id="authModalClose" aria-label="Закрыть">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <span class="lc-modal__icon" id="authModalIcon"><i class="fas fa-info"></i></span>
+            <h2 id="authModalTitle">LBL Cloud</h2>
+            <p id="authModalMessage"></p>
+            <div class="lc-modal__body" id="authModalBody"></div>
+            <div class="lc-modal__actions" id="authModalActions">
+                <button type="button" class="lc-auth-submit lc-auth-submit--modal" id="authModalOk">Понятно</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/core/api.js"></script>
+    <script src="auth.js?v=4"></script>
+</body>
+</html>

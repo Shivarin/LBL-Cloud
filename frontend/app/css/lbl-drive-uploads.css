@@ -1,0 +1,186 @@
+/* Панель «Загрузки» — карточки файлов, скорость, выравнивание */
+.ld-ui-gdrive .ld-panel--uploads {
+    background: #fff;
+    border: 1px solid rgba(98, 84, 243, 0.12);
+    overflow: hidden;
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-panel--uploads {
+    background: #1a1f2e;
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+.ld-ui-gdrive .ld-uploads__head {
+    padding: 14px 16px;
+    align-items: center;
+    gap: 8px;
+}
+
+.ld-ui-gdrive .ld-uploads__title {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e203c;
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-uploads__title {
+    color: #e8eaf6;
+}
+
+.ld-ui-gdrive .ld-uploads__title i {
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.ld-ui-gdrive .ld-uploads__list {
+    padding: 10px 12px 14px;
+    gap: 8px;
+}
+
+.ld-ui-gdrive .ld-up-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8f9fc;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-up-item {
+    background: rgba(15, 23, 42, 0.45);
+    border-color: rgba(148, 163, 184, 0.12);
+}
+
+.ld-ui-gdrive .ld-up-item__icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(98, 84, 243, 0.1);
+    color: #6254f3;
+    margin-top: 1px;
+}
+
+.ld-ui-gdrive .ld-up-item__icon i {
+    font-size: 14px;
+}
+
+.ld-ui-gdrive .ld-up-item__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ld-ui-gdrive .ld-up-item__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.35;
+}
+
+.ld-ui-gdrive .ld-up-item__name {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e203c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-up-item__name {
+    color: #e8eaf6;
+}
+
+.ld-ui-gdrive .ld-up-item__pct {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6254f3;
+    font-variant-numeric: tabular-nums;
+    padding-top: 1px;
+}
+
+.ld-ui-gdrive .ld-up-item__sub {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.35;
+    color: #6b7280;
+    font-variant-numeric: tabular-nums;
+}
+
+html[data-theme="dark"] .ld-ui-gdrive .ld-up-item__sub {
+    color: #94a3b8;
+}
+
+.ld-ui-gdrive .ld-up-item.is-uploading .ld-up-item__sub {
+    color: #60709d;
+}
+
+.ld-ui-gdrive .ld-up-item.is-done .ld-up-item__sub {
+    color: #16a34a;
+}
+
+.ld-ui-gdrive .ld-up-item__meta,
+.ld-ui-gdrive .ld-up-item__stats,
+.ld-ui-gdrive .ld-up-item__status,
+.ld-ui-gdrive .ld-up-item__speed,
+.ld-ui-gdrive .ld-up-item__size {
+    display: none;
+}
+
+.ld-ui-gdrive .ld-up-item.is-init .ld-up-item__bar span {
+    width: 28% !important;
+    animation: ld-up-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes ld-up-pulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+}
+
+.ld-ui-gdrive .ld-up-item__bar {
+    height: 6px;
+    border-radius: 99px;
+    background: rgba(98, 84, 243, 0.12);
+    overflow: hidden;
+}
+
+.ld-ui-gdrive .ld-up-item__bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #6254f3, #8b7cf8);
+    border-radius: 99px;
+    transition: width 0.12s linear;
+}
+
+.ld-ui-gdrive .ld-up-item.is-uploading .ld-up-item__bar span {
+    transition: width 0.08s linear;
+}
+
+.ld-ui-gdrive .ld-up-item.is-done .ld-up-item__bar span {
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.ld-ui-gdrive .ld-fab span.is-success {
+    background: #22c55e !important;
+    color: #fff;
+    min-width: 22px;
+    font-size: 13px;
+    line-height: 1;
+}
+
+/* Старый разметка __row — скрыть, если осталась в кэше */
+.ld-ui-gdrive .ld-up-item__row {
+    display: none;
+}

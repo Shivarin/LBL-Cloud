@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#eef6ff">
+    <title>Вход — LBL Cloud</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/cloud/lbl-cloud-mark.svg">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="auth.css?v=4">
+    <style>
+        /* Поле 2FA всегда видно, даже если CSS закэширован */
+        #twoFactorModal .lc-modal__2fa { display: grid !important; gap: 14px; margin-top: 8px; }
+        #twoFactorModal .lc-otp { display: grid !important; gap: 8px; }
+        #twoFactorModal .lc-otp__input {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            min-height: 58px !important;
+            padding: 0 16px !important;
+            border: 2px solid rgba(99, 102, 241, 0.35) !important;
+            border-radius: 16px !important;
+            background: #fff !important;
+            color: #0f172a !important;
+            font-size: 28px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.35em !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+        }
+        #twoFactorModal .lc-otp__label {
+            display: block !important;
+            color: #64748b !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+        }
+    </style>
+</head>
+<body class="lc-auth" data-auth-page="login">
+    <main class="lc-auth-shell">
+        <section class="lc-auth-card" aria-labelledby="authTitle">
+            <a href="/" class="lc-auth-brand" aria-label="LBL Cloud">
+                <img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="44" height="44">
+                <span>LBL<em>Cloud</em></span>
+            </a>
+
+            <div class="lc-auth-heading">
+                <span class="lc-auth-kicker"><i class="fas fa-shield-halved"></i> Защищенный вход</span>
+                <h1 id="authTitle">Войти в облако</h1>
+                <p>Откройте диск, загрузки, тариф и профиль Cloud через единый аккаунт LBL.</p>
+            </div>
+
+            <form class="lc-auth-form" id="cloudLoginForm" novalidate>
+                <label class="lc-field">
+                    <span>Email</span>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" autocomplete="email" placeholder="name@example.com" required>
+                </label>
+
+                <label class="lc-field">
+                    <span>Пароль</span>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" autocomplete="current-password" placeholder="Ваш пароль" required>
+                    <button type="button" class="lc-field__toggle" data-toggle-password aria-label="Показать пароль">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </label>
+
+                <div class="lc-auth-row">
+                    <label class="lc-check">
+                        <input type="checkbox" name="remember" checked>
+                        <span>Запомнить</span>
+                    </label>
+                    <button type="button" class="lc-link-btn" id="forgotPasswordBtn">Забыли пароль?</button>
+                </div>
+
+                <p class="lc-auth-status" id="authStatus" aria-live="polite"></p>
+
+                <button type="submit" class="lc-auth-submit">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    <span>Войти в Cloud</span>
+                </button>
+            </form>
+
+            <div class="lc-auth-switch">
+                <span>Нет аккаунта?</span>
+                <a href="register.html">Создать Cloud ID</a>
+            </div>
+        </section>
+
+        <aside class="lc-auth-side" aria-label="LBL Cloud">
+            <div class="lc-auth-side__top">
+                <span><i class="fas fa-lock"></i> Private</span>
+                <span><i class="fas fa-bolt"></i> Fast upload</span>
+            </div>
+            <div class="lc-cloud-preview" aria-hidden="true">
+                <div class="lc-cloud-preview__header">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="lc-cloud-preview__row is-main">
+                    <i class="fas fa-folder"></i>
+                    <strong>Проекты</strong>
+                    <em>12 файлов</em>
+                </div>
+                <div class="lc-cloud-preview__row">
+                    <i class="fas fa-file-lines"></i>
+                    <strong>Отчет Q1.pdf</strong>
+                    <em>2.4 МБ</em>
+                </div>
+                <div class="lc-cloud-preview__row">
+                    <i class="fas fa-file-image"></i>
+                    <strong>render_final.jpg</strong>
+                    <em>6.4 МБ</em>
+                </div>
+            </div>
+            <div class="lc-auth-metrics">
+                <article><strong>5 ГБ</strong><span>стартовый лимит</span></article>
+                <article><strong>2FA</strong><span>поддерживается</span></article>
+                <article><strong>API</strong><span>единый профиль</span></article>
+            </div>
+        </aside>
+    </main>
+
+    <div class="lc-modal" id="authModal" aria-hidden="true">
+        <div class="lc-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+            <button type="button" class="lc-modal__close" id="authModalClose" aria-label="Закрыть">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <span class="lc-modal__icon" id="authModalIcon"><i class="fas fa-info"></i></span>
+            <h2 id="authModalTitle">LBL Cloud</h2>
+            <p id="authModalMessage"></p>
+            <div class="lc-modal__body" id="authModalBody"></div>
+            <div class="lc-modal__actions" id="authModalActions">
+                <button type="button" class="lc-auth-submit lc-auth-submit--modal" id="authModalOk">Понятно</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="lc-modal lc-modal--2fa" id="twoFactorModal" aria-hidden="true">
+        <div class="lc-modal__card lc-modal__card--2fa" role="dialog" aria-modal="true" aria-labelledby="twoFactorTitle">
+            <button type="button" class="lc-modal__close" id="twoFactorClose" aria-label="Закрыть">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <span class="lc-modal__icon is-info"><i class="fas fa-shield-halved"></i></span>
+            <h2 id="twoFactorTitle">Двухфакторная проверка</h2>
+            <p class="lc-modal__lead">Введите 6-значный код из письма, чтобы завершить вход в LBL Cloud.</p>
+            <div class="lc-modal__2fa">
+                <label class="lc-otp" for="twoFactorCode">
+                    <span class="lc-otp__label">Код из email</span>
+                    <input
+                        type="text"
+                        class="lc-otp__input"
+                        id="twoFactorCode"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="6"
+                        placeholder="000000"
+                        aria-label="Код подтверждения из письма"
+                    >
+                </label>
+                <p class="lc-modal__hint"><i class="fas fa-envelope"></i> Проверьте «Входящие» и папку «Спам»</p>
+            </div>
+            <div class="lc-modal__actions">
+                <button type="button" class="lc-auth-submit lc-auth-submit--modal" id="twoFactorSubmit">
+                    <i class="fas fa-check"></i><span>Подтвердить вход</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/core/api.js"></script>
+    <script src="auth.js?v=5"></script>
+</body>
+</html>

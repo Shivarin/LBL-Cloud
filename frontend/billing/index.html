@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#eef3ff">
+    <title>Оплата и тарифы — LBL Cloud</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/cloud/lbl-cloud-mark.svg">
+    <link rel="stylesheet" href="/vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="billing.css?v=3">
+</head>
+<body class="lc-billing">
+    <div class="lc-billing__bg" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <header class="lc-billing__header">
+        <a href="/" class="lc-billing__brand">
+            <img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="36" height="36">
+            <span>LBL<em>Cloud</em></span>
+        </a>
+        <nav aria-label="Навигация оплаты">
+            <a href="/app/">Мой диск</a>
+            <a href="/pages/auth/login.html?return=https%3A%2F%2Fcloud.lbl3d.info%2Fpages%2Fbilling%2F" id="navLogin">Войти</a>
+        </nav>
+    </header>
+
+    <main class="lc-billing__main">
+        <section class="lc-billing__hero" aria-labelledby="billingTitle">
+            <div class="lc-billing__intro">
+                <span class="lc-billing__eyebrow">Оплата LBL Cloud</span>
+                <h1 id="billingTitle">Больше места для файлов без лишних шагов</h1>
+                <p>Выберите объем, подтвердите оплату через ЮKassa, и лимит обновится автоматически в вашем облаке.</p>
+                <div class="lc-billing__hero-actions">
+                    <a class="lc-billing__btn lc-billing__btn--primary" href="#plansGrid">Выбрать тариф</a>
+                    <a class="lc-billing__btn lc-billing__btn--soft" href="/app/">Вернуться в диск</a>
+                </div>
+            </div>
+            <aside class="lc-billing__status-card" aria-live="polite">
+                <span>Текущий статус</span>
+                <strong id="billingStatusTitle">Проверяем тариф</strong>
+                <p id="billingStatus">Загрузка…</p>
+                <div class="lc-billing__status-meter"><i id="billingStatusMeter"></i></div>
+            </aside>
+        </section>
+
+        <section class="lc-billing__trust" aria-label="Преимущества оплаты">
+            <article><span>01</span><strong>Мгновенное обновление</strong><p>После успешной оплаты лимит подтянется в Cloud автоматически.</p></article>
+            <article><span>02</span><strong>Безопасная оплата</strong><p>Платеж проходит через ЮKassa с подтверждением на стороне провайдера.</p></article>
+            <article><span>03</span><strong>Доступ из диска</strong><p>Тариф виден в профиле Cloud и рядом с индикатором хранилища.</p></article>
+        </section>
+
+        <div class="lc-billing__grid" id="plansGrid" aria-live="polite"></div>
+
+        <section class="lc-billing__note">
+            <div>
+                <strong>Платеж защищен</strong>
+                <p>Если платеж не завершился, деньги не списываются, а кнопку оформления можно нажать повторно.</p>
+            </div>
+            <a href="/pages/legal/terms.html">Условия сервиса</a>
+        </section>
+    </main>
+
+    <script src="/js/core/api.js"></script>
+    <script src="billing.js?v=5"></script>
+</body>
+</html>

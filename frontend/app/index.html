@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#6254f3">
+    <title>Мой диск — LBL Cloud</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/fonts/fonts.css">
+    <!-- LBL Cloud app UI v11 (account: 2FA, password, sessions) -->
+    <link rel="stylesheet" href="/app/css/lbl-drive.css?v=22">
+    <link rel="stylesheet" href="/app/css/lbl-drive-gdrive.css?v=12">
+    <link rel="stylesheet" href="/app/css/lbl-drive-polish.css?v=3">
+    <link rel="stylesheet" href="/app/css/lbl-drive-profile.css?v=7">
+    <link rel="stylesheet" href="/app/css/lbl-drive-uploads.css?v=4">
+    <link rel="stylesheet" href="/app/css/lbl-drive-layout.css?v=2">
+    <link rel="stylesheet" href="/app/css/lbl-drive-overrides.css?v=5">
+    <style>
+        /* Критичный каркас — работает даже при конфликте со старым lbl-drive.css */
+        body.ld-ui-gdrive.lbl-drive-app {
+            padding-top: 0 !important;
+            background: #eef3ff !important;
+        }
+        body.ld-ui-gdrive .ld-shell {
+            display: grid !important;
+            grid-template-columns: 240px minmax(0, 1fr) !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        body.ld-ui-gdrive .ld-topbar {
+            position: sticky !important;
+            top: 0 !important;
+            left: auto !important;
+            right: auto !important;
+            width: auto !important;
+        }
+        body.ld-ui-gdrive .ld-panel--main,
+        body.ld-ui-gdrive .ld-main {
+            background: var(--ld-surface) !important;
+            background-image: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+        body.ld-ui-gdrive .ld-sidebar.ld-panel--nav {
+            background: var(--ld-surface) !important;
+            background-image: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+        }
+        /* Блок 2FA / пароль / сессии — не скрывать старыми правилами .ld-security-card */
+        body.ld-ui-gdrive .ld-profile__panels {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr) !important;
+            gap: 12px !important;
+            margin: 4px 0 8px !important;
+        }
+        body.ld-ui-gdrive .ld-profile__panels .ld-account-card {
+            display: flex !important;
+            flex-direction: column !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: auto !important;
+            margin-top: 0 !important;
+            grid-template-columns: unset !important;
+        }
+    </style>
+    <script>
+        (function () {
+            var t = localStorage.getItem("theme") || "light";
+            if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+        })();
+    </script>
+</head>
+<body class="lbl-drive-app ld-ui-gdrive">
+    <div class="ld-bg" aria-hidden="true"><div class="ld-bg__veil"></div></div>
+
+    <div class="ld-shell" id="driveShell">
+        <aside class="ld-sidebar ld-panel--nav" aria-label="Навигация">
+            <a href="https://cloud.lbl3d.info/" class="ld-sidebar__brand">
+                <span class="ld-sidebar__logo"><img src="/assets/cloud/lbl-cloud-mark.svg" alt="" width="40" height="40"></span>
+                <span class="ld-sidebar__title">LBL <em>Cloud</em></span>
+            </a>
+
+            <div class="ld-create">
+                <button type="button" class="ld-create__btn" id="btnCreateMain" aria-expanded="false" aria-haspopup="true">
+                    <i class="fas fa-plus"></i>
+                    <span>Создать</span>
+                </button>
+                <div class="ld-create__menu is-hidden" id="createMenu" role="menu">
+                    <p class="ld-create__label">Создать</p>
+                    <button type="button" role="menuitem" id="btnCreateDoc" class="ld-create__item ld-create__item--doc">
+                        <i class="fas fa-file-lines"></i> Документ
+                    </button>
+                    <button type="button" role="menuitem" id="btnNewFolderSide" class="ld-create__item ld-create__item--folder">
+                        <i class="fas fa-folder-plus"></i> Папка
+                    </button>
+                    <button type="button" role="menuitem" id="btnCreateLink" class="ld-create__item ld-create__item--link">
+                        <i class="fas fa-link"></i> Общая ссылка
+                    </button>
+                    <div class="ld-create__divider" role="separator"></div>
+                    <button type="button" role="menuitem" id="btnUploadSide" class="ld-create__item ld-create__item--upload">
+                        <i class="fas fa-cloud-arrow-up"></i> Загрузить файлы
+                    </button>
+                    <button type="button" role="menuitem" id="btnCreateFolderUpload" class="ld-create__item ld-create__item--upload">
+                        <i class="fas fa-folder-open"></i> Загрузить в папку
+                    </button>
+                    <div class="ld-create__divider" role="separator"></div>
+                    <a href="/pages/billing/" role="menuitem" class="ld-create__menu-link ld-create__item ld-create__item--plan">
+                        <i class="fas fa-gift"></i> Тариф и место
+                    </a>
+                </div>
+            </div>
+
+            <nav class="ld-nav" aria-label="Разделы облака">
+                <button type="button" class="ld-nav__item is-active" data-section="drive">
+                    <span class="ld-nav__icon"><i class="fas fa-hard-drive"></i></span>
+                    <span class="ld-nav__label">Мой диск</span>
+                </button>
+                <button type="button" class="ld-nav__item" data-section="recent">
+                    <span class="ld-nav__icon"><i class="fas fa-clock"></i></span>
+                    <span class="ld-nav__label">Недавние</span>
+                </button>
+                <button type="button" class="ld-nav__item" data-section="favorites">
+                    <span class="ld-nav__icon"><i class="fas fa-star"></i></span>
+                    <span class="ld-nav__label">Избранное</span>
+                </button>
+                <button type="button" class="ld-nav__item" data-section="shared">
+                    <span class="ld-nav__icon"><i class="fas fa-users"></i></span>
+                    <span class="ld-nav__label">Доступные мне</span>
+                </button>
+                <button type="button" class="ld-nav__item" data-section="trash">
+                    <span class="ld-nav__icon"><i class="fas fa-trash"></i></span>
+                    <span class="ld-nav__label">Корзина</span>
+                </button>
+                <button type="button" class="ld-nav__item" data-section="settings">
+                    <span class="ld-nav__icon"><i class="fas fa-user"></i></span>
+                    <span class="ld-nav__label">Аккаунт</span>
+                </button>
+            </nav>
+
+            <div class="ld-sidebar__foot">
+                <p class="ld-badge" id="freeQuotaBadge"><i class="fas fa-gift"></i> 5 ГБ бесплатно</p>
+                <div class="ld-plan-card" id="planCard">
+                    <span class="ld-plan-card__label" id="planCardLabel">Тариф: Бесплатный</span>
+                    <p class="ld-plan-card__meta" id="planCardMeta">5 ГБ хранилища</p>
+                    <a href="/pages/billing/" class="ld-plan-card__btn" id="planCardBtn">Увеличить объём</a>
+                </div>
+                <div class="ld-quota" id="storageWidget">
+                    <div class="ld-quota__head">
+                        <span class="ld-quota__label">Хранилище</span>
+                        <span class="ld-quota__pct" id="storagePct">0%</span>
+                    </div>
+                    <div class="ld-quota__bar" aria-hidden="true"><span id="storageBar"></span></div>
+                    <span class="ld-quota__meta" id="storageMeta">—</span>
+                    <svg class="ld-quota__ring" viewBox="0 0 40 40" aria-hidden="true">
+                        <circle class="ld-quota__track" cx="20" cy="20" r="17"/>
+                        <circle class="ld-quota__fill" id="storageRing" cx="20" cy="20" r="17"/>
+                    </svg>
+                </div>
+            </div>
+        </aside>
+
+        <div class="ld-main-col">
+            <header class="ld-topbar">
+                <button type="button" class="ld-icon-btn ld-sidebar-toggle" id="sidebarToggle" aria-label="Меню"><i class="fas fa-grip"></i></button>
+                <div class="ld-top-search" role="search">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="search" id="driveSearchTop" placeholder="Поиск в LBL Cloud…" autocomplete="off" aria-label="Поиск в LBL Cloud">
+                    <button type="button" class="ld-top-search__filter" title="Фильтры" aria-label="Фильтры"><i class="fas fa-sliders"></i></button>
+                </div>
+                <div class="ld-topbar__end" id="hdr-right-auth">
+                    <button type="button" class="ld-icon-btn" title="Справка" aria-label="Справка"><i class="fas fa-circle-question"></i></button>
+                    <button type="button" class="ld-icon-btn" id="settingsThemeBtnTop" title="Тема" aria-label="Сменить тему"><i class="fas fa-moon"></i></button>
+                    <button type="button" class="ld-icon-btn ld-icon-btn--plus" id="btnUploadTop" title="Загрузить" aria-label="Загрузить"><i class="fas fa-plus"></i></button>
+                    <a href="https://lbl3d.info/" class="ld-icon-btn" title="LBL Студия" aria-label="LBL Студия"><i class="fas fa-layer-group"></i></a>
+                    <a href="#" class="ld-avatar-btn" id="linkProfile" data-section="settings" title="Профиль">
+                        <span class="ld-avatar" id="topAvatar">A</span>
+                    </a>
+                    <a href="/pages/auth/login.html?return=https%3A%2F%2Fcloud.lbl3d.info%2Fapp%2F" class="ld-btn ld-btn--primary ld-btn--sm" id="cloudLoginBtn">Войти</a>
+                </div>
+            </header>
+
+            <main class="ld-main ld-panel--main">
+                <div class="ld-workspace">
+                    <header class="ld-welcome">
+                        <div class="ld-welcome__row">
+                            <div class="ld-welcome__copy">
+                                <p class="ld-welcome__eyebrow"><i class="fas fa-cloud"></i> LBL Cloud</p>
+                                <h1 id="driveWelcomeTitle">Добро пожаловать в LBL Cloud</h1>
+                                <p id="driveWelcomeSub">Ваши файлы, папки и общий доступ — в одном месте</p>
+                            </div>
+                            <div class="ld-welcome__cta">
+                                <button type="button" class="ld-btn ld-btn--soft" id="btnNewFolderWelcome"><i class="fas fa-folder-plus"></i> Папка</button>
+                                <button type="button" class="ld-btn ld-btn--primary" id="btnUploadWelcome"><i class="fas fa-cloud-arrow-up"></i> Загрузить</button>
+                            </div>
+                        </div>
+                        <div class="ld-welcome__stats" id="driveStats" aria-live="polite"></div>
+                        <nav class="ld-quicklinks" aria-label="Быстрые ссылки">
+                            <a href="https://lbl3d.info/"><i class="fas fa-layer-group"></i> LBL Студия</a>
+                            <a href="/pages/billing/"><i class="fas fa-gift"></i> Тариф</a>
+                            <button type="button" id="quickUploads"><i class="fas fa-cloud-arrow-up"></i> Загрузки</button>
+                            <button type="button" id="quickTheme"><i class="fas fa-moon"></i> Тема</button>
+                        </nav>
+                    </header>
+
+                    <section class="ld-suggest is-hidden" id="driveSuggest" aria-label="Папки">
+                        <div class="ld-suggest__head">
+                            <h2>Папки</h2>
+                        </div>
+                        <div class="ld-suggest__row" id="driveSuggestRow"></div>
+                    </section>
+
+                    <section class="ld-profile is-hidden" id="driveSettings" aria-label="Аккаунт LBL Cloud">
+                        <div class="ld-profile__hero">
+                            <div class="ld-profile__identity">
+                                <span class="ld-profile__avatar" id="profileAvatarLarge">A</span>
+                                <div>
+                                    <span class="ld-profile__eyebrow"><i class="fas fa-cloud"></i> LBL Cloud ID</span>
+                                    <h2 id="profileName">Алексей П.</h2>
+                                    <p id="profileEmail">Аккаунт подключен к личному облаку</p>
+                                </div>
+                            </div>
+                            <div class="ld-profile__actions">
+                                <a class="ld-btn ld-btn--primary" href="/pages/billing/"><i class="fas fa-gift"></i> Тарифы и оплата</a>
+                                <button type="button" class="ld-btn ld-btn--soft" id="settingsThemeBtn"><i class="fas fa-moon"></i> Сменить тему</button>
+                            </div>
+                        </div>
+                        <h2 class="ld-profile__section-title">Безопасность и вход</h2>
+                        <div class="ld-profile__panels">
+                            <article class="ld-account-card" id="profileSecurityCard">
+                                <div class="ld-account-card__head">
+                                    <span class="ld-profile-panel__label">Безопасность</span>
+                                    <h3>Защита аккаунта</h3>
+                                    <p>Двухфакторный вход и управление паролем LBL Cloud ID</p>
+                                </div>
+
+                                <div class="ld-security-item">
+                                    <div class="ld-security-item__main">
+                                        <span class="ld-security-item__icon"><i class="fas fa-shield-halved"></i></span>
+                                        <div>
+                                            <strong>2FA по email</strong>
+                                            <p id="profile2faDesc">Код подтверждения при каждом входе</p>
+                                        </div>
+                                    </div>
+                                    <div class="ld-security-item__action">
+                                        <span class="ld-pill ld-pill--off" id="profile2faBadge">Выключено</span>
+                                        <button type="button" class="ld-btn ld-btn--soft ld-btn--sm" id="profile2faToggleBtn">Включить</button>
+                                    </div>
+                                </div>
+
+                                <div class="ld-security-code is-hidden" id="profile2faCodeBlock">
+                                    <label class="ld-security-code__label" for="profile2faCode">Код из письма</label>
+                                    <div class="ld-security-code__row">
+                                        <input type="text" id="profile2faCode" maxlength="6" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" aria-label="Код 2FA">
+                                        <button type="button" class="ld-btn ld-btn--primary ld-btn--sm" id="profile2faConfirmBtn">Подтвердить</button>
+                                    </div>
+                                    <p class="ld-security-hint" id="profile2faHint"></p>
+                                </div>
+
+                                <div class="ld-security-divider" role="separator"></div>
+
+                                <form class="ld-security-form" id="profilePasswordForm" autocomplete="on">
+                                    <div class="ld-security-form__head">
+                                        <strong>Смена пароля</strong>
+                                        <p>Минимум 8 символов. Уведомление придёт на email.</p>
+                                    </div>
+                                    <label class="ld-security-field">
+                                        <span>Текущий пароль</span>
+                                        <input type="password" name="current" autocomplete="current-password" required>
+                                    </label>
+                                    <label class="ld-security-field">
+                                        <span>Новый пароль</span>
+                                        <input type="password" name="new" autocomplete="new-password" required>
+                                    </label>
+                                    <label class="ld-security-field">
+                                        <span>Повтор нового пароля</span>
+                                        <input type="password" name="confirm" autocomplete="new-password" required>
+                                    </label>
+                                    <p class="ld-security-status" id="profilePasswordStatus" aria-live="polite"></p>
+                                    <button type="submit" class="ld-btn ld-btn--primary"><i class="fas fa-key"></i> Сохранить пароль</button>
+                                </form>
+                            </article>
+
+                            <article class="ld-account-card ld-account-card--sessions">
+                                <div class="ld-account-card__head">
+                                    <span class="ld-profile-panel__label">Сессии</span>
+                                    <h3>Устройства и выход</h3>
+                                    <p>Завершите вход на всех устройствах, если подозреваете доступ посторонних.</p>
+                                </div>
+                                <ul class="ld-session-list" id="profileLoginHistory">
+                                    <li class="ld-session-list__empty">Загружаем историю входов…</li>
+                                </ul>
+                                <button type="button" class="ld-btn ld-btn--soft" id="profileLogoutAllBtn"><i class="fas fa-right-from-bracket"></i> Выйти на всех устройствах</button>
+                            </article>
+                        </div>
+                        <div class="ld-profile__stats">
+                            <article>
+                                <span><i class="fas fa-database"></i></span>
+                                <h3 id="profileStorageTitle">Хранилище</h3>
+                                <p id="settingsStorageText">Считаем занятое место…</p>
+                            </article>
+                            <article>
+                                <span><i class="fas fa-shield-halved"></i></span>
+                                <h3>Приватность</h3>
+                                <p>Файлы доступны только вам, пока вы не поделитесь ссылкой.</p>
+                            </article>
+                            <article>
+                                <span><i class="fas fa-bolt"></i></span>
+                                <h3>Загрузка</h3>
+                                <p>Параллельные загрузки и крупные файлы до лимита тарифа.</p>
+                            </article>
+                        </div>
+                        <div class="ld-profile__grid">
+                            <article class="ld-profile-panel ld-profile-panel--plan">
+                                <div>
+                                    <span class="ld-profile-panel__label">Подписка</span>
+                                    <h3 id="profilePlanName">Бесплатный Cloud</h3>
+                                    <p id="profilePlanMeta">5 ГБ для старта, тариф можно изменить в любой момент.</p>
+                                </div>
+                                <a href="/pages/billing/" class="ld-profile-panel__cta">Открыть оплату <i class="fas fa-chevron-right"></i></a>
+                            </article>
+                            <article class="ld-profile-panel">
+                                <span class="ld-profile-panel__label">Аккаунт</span>
+                                <h3>Единый вход LBL</h3>
+                                <p>Профиль, облако и история файлов работают через один защищенный аккаунт.</p>
+                                <a href="/pages/auth/login.html?return=https%3A%2F%2Fcloud.lbl3d.info%2Fapp%2F" class="ld-profile-panel__cta">Сменить аккаунт <i class="fas fa-chevron-right"></i></a>
+                            </article>
+                            <article class="ld-profile-panel">
+                                <span class="ld-profile-panel__label">Состояние</span>
+                                <h3>Облако активно</h3>
+                                <p>Синхронизация, избранное, корзина и быстрый поиск доступны из одного рабочего экрана.</p>
+                                <button type="button" class="ld-profile-panel__cta" data-section-jump="drive">Вернуться к файлам <i class="fas fa-chevron-right"></i></button>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="ld-files-section" id="driveFilesBlock">
+                        <div class="ld-toolbar">
+                        <div class="ld-files-section__head">
+                            <h2 id="driveFilesHeading">Рекомендуемые файлы <span class="ld-count" id="driveFilesCount"></span></h2>
+                            <div class="ld-workspace__tools">
+                                <div class="ld-seg" role="group" aria-label="Вид" id="viewControl">
+                                    <button type="button" class="is-active" data-view="grid" title="Сетка"><i class="fas fa-grip"></i></button>
+                                    <button type="button" data-view="list" title="Список"><i class="fas fa-list"></i></button>
+                                </div>
+                                <div class="ld-sort" id="sortControl">
+                                    <button type="button" class="ld-sort__btn" id="sortBtn" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-arrow-down-wide-short"></i>
+                                        <span id="sortLabel">По дате изменения</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="ld-sort__menu is-hidden" id="sortMenu" role="menu" aria-hidden="true">
+                                        <button type="button" data-sort="date-desc" class="is-active"><i class="fas fa-check"></i> Сначала новые</button>
+                                        <button type="button" data-sort="name-asc"><i class="fas fa-check"></i> По имени</button>
+                                        <button type="button" data-sort="size-desc"><i class="fas fa-check"></i> По размеру</button>
+                                        <button type="button" data-sort="type-asc"><i class="fas fa-check"></i> По типу</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ld-workspace__top">
+                            <nav class="ld-path" id="breadcrumbs" aria-label="Путь"></nav>
+                            <div class="ld-workspace__top-actions">
+                                <label class="ld-search">
+                                    <i class="fas fa-search"></i>
+                                    <input type="search" id="driveSearch" placeholder="Поиск в папке…" autocomplete="off">
+                                </label>
+                                <button type="button" class="ld-btn ld-btn--soft" id="btnNewFolder"><i class="fas fa-folder-plus"></i><span class="ld-only-desktop">Папка</span></button>
+                                <button type="button" class="ld-btn ld-btn--primary" id="btnUpload"><i class="fas fa-cloud-arrow-up"></i><span class="ld-only-desktop">Загрузить</span></button>
+                            </div>
+                        </div>
+
+                        <nav class="ld-filter-row" aria-label="Фильтры файлов">
+                            <button type="button" class="is-active" data-kind="all"><i class="fas fa-cloud"></i> Все</button>
+                            <button type="button" data-kind="folder"><i class="fas fa-folder"></i> Папки</button>
+                            <button type="button" data-kind="file"><i class="fas fa-file"></i> Файлы</button>
+                            <button type="button" data-kind="image"><i class="fas fa-image"></i> Изображения</button>
+                            <button type="button" data-kind="document"><i class="fas fa-file-lines"></i> Документы</button>
+                            <button type="button" data-kind="video"><i class="fas fa-video"></i> Видео</button>
+                            <button type="button" data-kind="archive"><i class="fas fa-file-zipper"></i> Архивы</button>
+                        </nav>
+                        </div>
+
+                        <div class="ld-content-panel">
+                        <div class="ld-selection-bar is-hidden" id="selectionBar" aria-live="polite">
+                            <div class="ld-selection-bar__meta">
+                                <span class="ld-selection-bar__icon"><i class="fas fa-file"></i></span>
+                                <strong id="selectionName">Файл</strong>
+                                <span id="selectionMeta">Выбран 1 объект</span>
+                            </div>
+                            <div class="ld-selection-bar__actions">
+                                <button type="button" data-selection-action="share"><i class="fas fa-link"></i><span>Ссылка</span></button>
+                                <button type="button" data-selection-action="favorite"><i class="fas fa-star"></i><span>В избранное</span></button>
+                                <button type="button" data-selection-action="download"><i class="fas fa-download"></i><span>Скачать</span></button>
+                                <button type="button" data-selection-action="rename"><i class="fas fa-pen"></i><span>Переименовать</span></button>
+                                <button type="button" data-selection-action="delete" class="is-danger"><i class="fas fa-trash"></i><span>Удалить</span></button>
+                                <button type="button" data-selection-action="close" class="ld-selection-bar__close" aria-label="Снять выбор"><i class="fas fa-xmark"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="ld-workspace__body" id="driveContent">
+                            <div class="ld-dropzone is-hidden" id="dropOverlay">
+                                <div class="ld-dropzone__card">
+                                    <div class="ld-dropzone__icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                                    <p>Отпустите файлы</p>
+                                    <span>Загрузка начнётся сразу</span>
+                                </div>
+                            </div>
+                            <div class="ld-state ld-state--load" id="driveLoading">
+                                <div class="ld-state__spinner"></div>
+                                <p>Загружаем файлы…</p>
+                            </div>
+                            <div class="ld-state ld-state--empty is-hidden" id="driveEmpty">
+                                <div class="ld-state__hero"><i class="fas fa-cloud"></i></div>
+                                <h2>Здесь пока пусто</h2>
+                                <p>Перетащите файлы в окно или загрузите с компьютера</p>
+                                <div class="ld-state__actions">
+                                    <button type="button" class="ld-btn ld-btn--primary ld-btn--lg" id="btnUploadEmpty"><i class="fas fa-cloud-arrow-up"></i> Загрузить</button>
+                                    <button type="button" class="ld-btn ld-btn--soft" id="btnNewFolderEmpty"><i class="fas fa-folder-plus"></i> Создать папку</button>
+                                </div>
+                            </div>
+                            <div class="ld-files view-grid" id="driveGrid"></div>
+                            <nav class="ld-pager is-hidden" id="drivePager" aria-label="Страницы файлов"></nav>
+                            <aside class="ld-inspector is-hidden" id="driveInspector" aria-label="Детали файла">
+                                <button type="button" class="ld-inspector__close" id="inspectorClose" aria-label="Закрыть детали"><i class="fas fa-xmark"></i></button>
+                                <div class="ld-inspector__preview" id="inspectorPreview"></div>
+                                <div class="ld-inspector__head">
+                                    <span id="inspectorKind">Файл</span>
+                                    <h2 id="inspectorName">Название</h2>
+                                    <p id="inspectorMeta">Размер и дата</p>
+                                </div>
+                                <div class="ld-inspector__actions">
+                                    <button type="button" data-selection-action="share"><i class="fas fa-link"></i> Ссылка</button>
+                                    <button type="button" data-selection-action="download"><i class="fas fa-download"></i> Скачать</button>
+                                </div>
+                                <dl class="ld-inspector__list">
+                                    <div><dt>Владелец</dt><dd id="inspectorOwner">Алексей П.</dd></div>
+                                    <div><dt>Доступ</dt><dd id="inspectorAccess">Только вы</dd></div>
+                                    <div><dt>Активность</dt><dd id="inspectorActivity">Открыт сегодня</dd></div>
+                                </dl>
+                            </aside>
+                        </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <aside class="ld-rail is-hidden" aria-hidden="true">
+            <a href="https://lbl3d.info/" class="ld-rail__item" title="LBL Студия"><i class="fas fa-layer-group"></i></a>
+            <a href="/pages/billing/" class="ld-rail__item" title="Тариф"><i class="fas fa-gift"></i></a>
+            <button type="button" class="ld-rail__item" id="uploadsFabRail" title="Загрузки"><i class="fas fa-cloud-arrow-up"></i></button>
+            <button type="button" class="ld-rail__item" id="themeToggle" title="Тема"><i class="fas fa-moon"></i></button>
+            <span class="ld-rail__spacer"></span>
+            <button type="button" class="ld-rail__item ld-rail__item--plus" title="Ещё"><i class="fas fa-plus"></i></button>
+        </aside>
+
+        <aside class="ld-panel ld-panel--uploads is-hidden" id="uploadsPanel" aria-label="Загрузки">
+            <div class="ld-uploads__head">
+                <div class="ld-uploads__title">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    <span>Загрузки</span>
+                    <em id="uploadsCount">0</em>
+                </div>
+                <button type="button" class="ld-icon-btn" id="uploadsClose" aria-label="Скрыть"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <ul class="ld-uploads__list" id="uploadsList"></ul>
+        </aside>
+    </div>
+
+    <button type="button" class="ld-fab is-hidden" id="uploadsFab" aria-label="Загрузки">
+        <i class="fas fa-cloud-arrow-up"></i>
+        <span id="uploadsFabBadge">0</span>
+    </button>
+
+    <div class="ld-ctx is-hidden" id="driveCtx" role="menu" aria-hidden="true"></div>
+
+    <div class="ld-modal is-hidden" id="nameModal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="ld-modal__card">
+            <button type="button" class="ld-modal__close" id="nameModalClose" aria-label="Закрыть"><i class="fas fa-xmark"></i></button>
+            <span class="ld-modal__eyebrow" id="nameModalEyebrow">LBL Cloud</span>
+            <h2 id="nameModalTitle">Новое имя</h2>
+            <label class="ld-modal__field">
+                <span id="nameModalLabel">Название</span>
+                <input type="text" id="nameModalInput" autocomplete="off">
+            </label>
+            <div class="ld-modal__actions">
+                <button type="button" class="ld-btn ld-btn--soft" id="nameModalCancel">Отмена</button>
+                <button type="button" class="ld-btn ld-btn--primary" id="nameModalApply">Готово</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ld-toast is-hidden" id="ldToast" aria-live="polite"></div>
+    <input type="file" id="fileInput" multiple hidden>
+
+    <script src="/js/core/api.js"></script>
+    <script src="/app/js/lbl-drive-upload.js?v=14"></script>
+    <script src="/app/js/lbl-drive.js?v=38"></script>
+</body>
+</html>

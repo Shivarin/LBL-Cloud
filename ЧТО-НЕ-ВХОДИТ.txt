@@ -1,0 +1,16 @@
+В эту папку НЕ копировалось (остаётся в основном репозитории site):
+
+- backend/main.py — полный API LBL Studio, оператор, форум, заказы
+- backend/operator_*.py, telegram_bot.py, vk_bot.py
+- frontend/pages/operator/ — операторская панель
+- frontend/pages/auth/ на lbl3d.info (студия)
+- frontend123523/ — старые копии
+- .env, ключи ЮKassa, SMTP, JWT-секреты
+- frontend/vendor/ — шрифты (скачиваются на сервере)
+- База данных и дампы
+- Логи (*.log)
+
+Для сдачи / портфолио достаточно содержимого LBL-Cloud + пояснительной записки в docs/.
+
+Обновить копию из основного проекта:
+  powershell -File LBL-Cloud\sync-from-site.ps1

@@ -1,0 +1,856 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --lc-ink: #0f172a;
+    --lc-muted: #64748b;
+    --lc-line: rgba(99, 102, 241, 0.14);
+    --lc-indigo: #4f46e5;
+    --lc-blue: #0ea5e9;
+    --lc-teal: #14b8a6;
+    --lc-amber: #f59e0b;
+    --lc-danger: #ef4444;
+    --lc-ok: #16a34a;
+    --lc-shadow: 0 24px 70px rgba(55, 65, 160, 0.18), 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+body.lc-auth {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--lc-ink);
+    background:
+        linear-gradient(115deg, rgba(241, 246, 255, 0.96), rgba(232, 250, 255, 0.88) 42%, rgba(243, 244, 255, 0.96)),
+        #eef6ff;
+    font-family: "Roboto", system-ui, sans-serif;
+    overflow-x: hidden;
+}
+
+body.lc-auth::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(79, 70, 229, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 70, 229, 0.04) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: linear-gradient(180deg, #000, transparent 78%);
+}
+
+.lc-auth-shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(340px, 500px) minmax(0, 1fr);
+    gap: 22px;
+    width: min(1180px, calc(100vw - 32px));
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 28px 0;
+    align-items: center;
+}
+
+.lc-auth-shell--register {
+    grid-template-columns: minmax(380px, 560px) minmax(0, 1fr);
+}
+
+.lc-auth-card,
+.lc-auth-side {
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: var(--lc-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.84);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.lc-auth-card {
+    display: grid;
+    gap: 22px;
+    padding: 30px;
+    border-radius: 24px;
+}
+
+.lc-auth-brand {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.lc-auth-brand img {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 15px;
+    box-shadow: 0 14px 30px rgba(79, 70, 229, 0.18);
+}
+
+.lc-auth-brand span {
+    font-family: "Montserrat", sans-serif;
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.lc-auth-brand em {
+    color: var(--lc-indigo);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.lc-auth-heading {
+    display: grid;
+    gap: 10px;
+}
+
+.lc-auth-kicker {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    color: #075985;
+    background: rgba(236, 254, 255, 0.76);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.lc-auth-heading h1 {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 34px;
+    line-height: 1.05;
+    letter-spacing: 0;
+}
+
+.lc-auth-heading p {
+    max-width: 440px;
+    margin: 0;
+    color: var(--lc-muted);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.lc-auth-form {
+    display: grid;
+    gap: 14px;
+}
+
+.lc-auth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.lc-field {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+}
+
+.lc-field > span {
+    color: var(--lc-ink);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.lc-field > i {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    color: var(--lc-indigo);
+}
+
+.lc-field input {
+    width: 100%;
+    height: 48px;
+    padding: 0 46px;
+    border: 1px solid rgba(99, 102, 241, 0.16);
+    border-radius: 15px;
+    outline: none;
+    color: var(--lc-ink);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 10px 22px rgba(79, 70, 229, 0.06);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.lc-field input:focus {
+    border-color: rgba(14, 165, 233, 0.52);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.lc-field__toggle {
+    position: absolute;
+    right: 8px;
+    bottom: 7px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 0;
+    border-radius: 11px;
+    color: var(--lc-muted);
+    background: transparent;
+    cursor: pointer;
+}
+
+.lc-field__toggle:hover {
+    color: var(--lc-indigo);
+    background: rgba(99, 102, 241, 0.09);
+}
+
+.lc-auth-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.lc-check {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: var(--lc-muted);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.lc-check input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--lc-indigo);
+}
+
+.lc-check--wide {
+    align-items: flex-start;
+}
+
+.lc-check a {
+    color: var(--lc-indigo);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.lc-check a:hover {
+    color: #4a36dc;
+}
+
+.lc-consent-note {
+    margin: -2px 0 0 26px;
+    color: var(--lc-muted);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.lc-consent-note a {
+    color: var(--lc-indigo);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.lc-consent-note a:hover {
+    text-decoration: underline;
+}
+
+.lc-link-btn,
+.lc-auth-switch a {
+    border: 0;
+    padding: 0;
+    color: var(--lc-indigo);
+    background: none;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.lc-link-btn:hover,
+.lc-auth-switch a:hover {
+    color: var(--lc-blue);
+}
+
+.lc-auth-status {
+    display: none;
+    min-height: 40px;
+    margin: 0;
+    padding: 11px 12px;
+    border-radius: 13px;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.lc-auth-status.is-visible {
+    display: block;
+}
+
+.lc-auth-status.is-error {
+    color: #991b1b;
+    background: rgba(254, 226, 226, 0.76);
+}
+
+.lc-auth-status.is-success {
+    color: #166534;
+    background: rgba(220, 252, 231, 0.76);
+}
+
+.lc-auth-status.is-info {
+    color: #075985;
+    background: rgba(224, 242, 254, 0.82);
+}
+
+.lc-auth-submit {
+    display: inline-flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--lc-indigo), var(--lc-blue));
+    box-shadow: 0 18px 34px rgba(79, 70, 229, 0.22);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.18s, filter 0.18s, box-shadow 0.18s;
+}
+
+.lc-auth-submit:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+}
+
+.lc-auth-submit:disabled {
+    cursor: wait;
+    filter: grayscale(0.2);
+    opacity: 0.72;
+}
+
+.lc-auth-submit--modal {
+    min-width: 150px;
+    width: auto;
+    padding: 0 18px;
+}
+
+.lc-auth-switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--lc-muted);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.lc-password-meter {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.08);
+}
+
+.lc-password-meter span {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--lc-danger), var(--lc-amber), var(--lc-teal));
+    transition: width 0.2s;
+}
+
+.lc-auth-side {
+    position: relative;
+    display: grid;
+    gap: 18px;
+    padding: 28px;
+    overflow: hidden;
+    border-radius: 28px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(236, 254, 255, 0.38)),
+        rgba(255, 255, 255, 0.6);
+}
+
+.lc-auth-side::after {
+    content: "";
+    position: absolute;
+    inset: auto -80px -80px auto;
+    width: 260px;
+    height: 180px;
+    border-radius: 80px;
+    background:
+        linear-gradient(135deg, rgba(79, 70, 229, 0.16), rgba(20, 184, 166, 0.13));
+    transform: rotate(-14deg);
+    pointer-events: none;
+}
+
+.lc-auth-side__top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.lc-auth-side__top span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    color: #075985;
+    background: rgba(255, 255, 255, 0.62);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.lc-cloud-preview {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+    width: min(560px, 100%);
+    margin: 24px auto 0;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.56);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 18px 42px rgba(79, 70, 229, 0.12);
+}
+
+.lc-cloud-preview__header {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lc-cloud-preview__header span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--lc-blue);
+}
+
+.lc-cloud-preview__header span:nth-child(2) {
+    background: var(--lc-amber);
+}
+
+.lc-cloud-preview__header span:nth-child(3) {
+    background: var(--lc-teal);
+}
+
+.lc-cloud-preview__row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    min-height: 58px;
+    padding: 0 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.64);
+}
+
+.lc-cloud-preview__row.is-main {
+    min-height: 74px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.94), rgba(14, 165, 233, 0.86));
+    color: #fff;
+}
+
+.lc-cloud-preview__row i {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 13px;
+    color: var(--lc-indigo);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.lc-cloud-preview__row.is-main i {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.lc-cloud-preview__row strong,
+.lc-cloud-preview__row em {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lc-cloud-preview__row strong {
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.lc-cloud-preview__row em {
+    color: var(--lc-muted);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.lc-cloud-preview__row.is-main em {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.lc-auth-metrics {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.lc-auth-metrics article {
+    min-width: 0;
+    min-height: 88px;
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.56);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.lc-auth-metrics strong,
+.lc-auth-metrics span {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.lc-auth-metrics strong {
+    color: var(--lc-ink);
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.lc-auth-metrics span {
+    margin-top: 6px;
+    color: var(--lc-muted);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.lc-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(15, 23, 42, 0.38);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.lc-modal.is-open {
+    display: flex;
+}
+
+.lc-modal__card {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    width: min(420px, 100%);
+    max-height: min(720px, calc(100vh - 36px));
+    overflow: auto;
+    padding: 24px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: var(--lc-shadow);
+}
+
+.lc-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 0;
+    border-radius: 12px;
+    color: var(--lc-muted);
+    background: rgba(99, 102, 241, 0.08);
+    cursor: pointer;
+}
+
+.lc-modal__icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--lc-indigo), var(--lc-blue));
+}
+
+.lc-modal__icon.is-error {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.lc-modal__icon.is-success {
+    background: linear-gradient(135deg, #16a34a, #14b8a6);
+}
+
+.lc-modal h2 {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    line-height: 1.15;
+}
+
+.lc-modal p {
+    margin: 0;
+    color: var(--lc-muted);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.lc-modal__body {
+    display: grid;
+    gap: 12px;
+}
+
+.lc-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* --- Модальные формы (2FA, восстановление пароля) --- */
+.lc-modal--2fa .lc-modal__card,
+.lc-modal--form .lc-modal__card {
+    width: min(440px, 100%);
+    padding: 28px 26px 24px;
+}
+
+.lc-modal--2fa .lc-modal__card {
+    text-align: center;
+}
+
+.lc-modal--2fa .lc-modal__icon {
+    margin: 0 auto;
+}
+
+.lc-modal--2fa h2,
+.lc-modal--form h2 {
+    text-align: center;
+}
+
+.lc-modal--2fa p,
+.lc-modal--form p {
+    text-align: center;
+}
+
+.lc-modal__lead {
+    margin: 0;
+    color: var(--lc-muted);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.55;
+    text-align: center;
+}
+
+.lc-modal__card--2fa {
+    width: min(440px, 100%);
+    padding: 28px 26px 24px;
+    text-align: center;
+}
+
+.lc-modal__card--2fa .lc-modal__icon {
+    margin: 0 auto;
+}
+
+.lc-modal__card--2fa .lc-modal__actions {
+    justify-content: stretch;
+    margin-top: 4px;
+}
+
+.lc-modal__card--2fa .lc-auth-submit--modal {
+    width: 100%;
+    min-height: 48px;
+}
+
+.lc-modal__2fa {
+    display: grid;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.lc-otp {
+    display: grid;
+    gap: 8px;
+}
+
+.lc-otp__label {
+    color: var(--lc-muted);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.lc-otp__input {
+    width: 100%;
+    height: 58px;
+    padding: 0 16px;
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    border-radius: 16px;
+    outline: none;
+    color: var(--lc-ink);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 28px rgba(79, 70, 229, 0.08);
+    font: inherit;
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 800;
+    letter-spacing: 0.42em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.lc-otp__input::placeholder {
+    letter-spacing: 0.18em;
+    color: rgba(100, 116, 139, 0.45);
+    font-size: 22px;
+}
+
+.lc-otp__input:focus {
+    border-color: rgba(14, 165, 233, 0.55);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.lc-modal__hint {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: #075985;
+    background: rgba(224, 242, 254, 0.82);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.lc-modal__hint i {
+    color: var(--lc-indigo);
+}
+
+.lc-modal-field {
+    display: grid;
+    gap: 8px;
+}
+
+.lc-modal-field > span {
+    color: var(--lc-ink);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.lc-modal-field input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid rgba(99, 102, 241, 0.16);
+    border-radius: 15px;
+    outline: none;
+    color: var(--lc-ink);
+    background: rgba(255, 255, 255, 0.92);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.lc-modal-field input:focus {
+    border-color: rgba(14, 165, 233, 0.52);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+}
+
+.lc-modal--2fa .lc-modal__actions,
+.lc-modal--form .lc-modal__actions {
+    justify-content: stretch;
+    margin-top: 4px;
+}
+
+.lc-modal--2fa .lc-auth-submit--modal,
+.lc-modal--form .lc-auth-submit--modal {
+    width: 100%;
+    min-height: 48px;
+}
+
+.lc-auth-submit--modal span {
+    display: inline;
+}
+
+@media (max-width: 900px) {
+    .lc-auth-shell,
+    .lc-auth-shell--register {
+        grid-template-columns: 1fr;
+        width: min(620px, calc(100vw - 24px));
+        padding: 12px 0;
+    }
+
+    .lc-auth-side {
+        order: 0;
+        padding: 18px;
+    }
+
+    .lc-cloud-preview {
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 560px) {
+    .lc-auth-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .lc-auth-heading h1 {
+        font-size: 28px;
+    }
+
+    .lc-auth-grid,
+    .lc-auth-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .lc-cloud-preview__row {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .lc-cloud-preview__row em {
+        display: none;
+    }
+
+    .lc-auth-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

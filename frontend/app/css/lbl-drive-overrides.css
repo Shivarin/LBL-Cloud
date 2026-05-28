@@ -1,0 +1,491 @@
+/* LBL Cloud — выравнивание и сброс конфликтов со старым lbl-drive.css */
+
+body.ld-ui-gdrive {
+    --ld-sidebar-w: 240px;
+    overflow: hidden;
+}
+
+/* —— Сайдбар: хранилище —— */
+body.ld-ui-gdrive .ld-sidebar {
+    padding: 10px 10px 14px;
+    gap: 6px;
+    overflow-y: hidden !important;
+}
+
+body.ld-ui-gdrive .ld-sidebar__foot {
+    gap: 8px;
+    padding-top: 10px;
+}
+
+body.ld-ui-gdrive .ld-quota {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--ld-border) !important;
+    background: rgba(98, 84, 243, 0.04) !important;
+    float: none !important;
+}
+
+body.ld-ui-gdrive .ld-quota__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+body.ld-ui-gdrive .ld-quota__label {
+    margin: 0 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: var(--ld-text);
+}
+
+body.ld-ui-gdrive .ld-quota__pct {
+    position: static !important;
+    display: block !important;
+    float: none !important;
+    inset: auto !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: var(--ld) !important;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+body.ld-ui-gdrive .ld-quota__text {
+    display: contents;
+}
+
+body.ld-ui-gdrive .ld-quota__bar {
+    width: 100% !important;
+    clear: none !important;
+    margin: 0 !important;
+    height: 6px !important;
+}
+
+body.ld-ui-gdrive .ld-quota__meta {
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.35;
+    color: var(--ld-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.ld-ui-gdrive .ld-quota__ring {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-plan-card {
+    padding: 10px 12px;
+}
+
+body.ld-ui-gdrive .ld-plan-card__meta,
+body.ld-ui-gdrive .ld-plan-card__label {
+    line-height: 1.35;
+}
+
+body.ld-ui-gdrive .ld-plan-card__btn {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Меню "Создать" как полноценный всплывающий dropdown */
+body.ld-ui-gdrive .ld-create {
+    position: relative;
+    z-index: 1200;
+}
+
+body.ld-ui-gdrive .ld-create__menu {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 260px;
+    max-width: calc(100vw - 24px);
+    padding: 8px 0 !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(98, 84, 243, 0.18) !important;
+    background: #ffffff !important;
+    box-shadow: 0 18px 44px rgba(21, 28, 78, 0.2) !important;
+    z-index: 1400 !important;
+    overflow: hidden;
+}
+
+body.ld-ui-gdrive .ld-create__menu:not(.is-hidden) {
+    animation: ld-create-menu-in 0.16s ease-out;
+    transform-origin: 16px top;
+}
+
+@keyframes ld-create-menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+html[data-theme="dark"] body.ld-ui-gdrive .ld-create__menu {
+    background: #1a2237 !important;
+    border-color: rgba(148, 163, 184, 0.24) !important;
+}
+
+body.ld-ui-gdrive .ld-create__menu.is-hidden {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-create__item,
+body.ld-ui-gdrive .ld-create__menu-link {
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+    display: grid !important;
+    grid-template-columns: 22px 1fr;
+    align-items: center;
+    column-gap: 12px;
+    padding: 10px 14px !important;
+}
+
+body.ld-ui-gdrive .ld-create__item i,
+body.ld-ui-gdrive .ld-create__menu-link i {
+    width: 22px !important;
+    min-width: 22px;
+    text-align: center;
+    font-size: 16px !important;
+    margin: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-create__item span,
+body.ld-ui-gdrive .ld-create__menu-link span {
+    min-width: 0;
+}
+
+body.ld-ui-gdrive .ld-create__item:hover,
+body.ld-ui-gdrive .ld-create__menu-link:hover {
+    background: rgba(98, 84, 243, 0.08) !important;
+}
+
+/* —— Рабочая область —— */
+body.ld-ui-gdrive .ld-workspace {
+    padding: 10px 24px 36px !important;
+    min-height: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-welcome {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+}
+
+body.ld-ui-gdrive .ld-welcome h1 {
+    font-size: clamp(1.25rem, 2vw, 1.55rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.25;
+}
+
+body.ld-ui-gdrive .ld-welcome p {
+    font-size: 12px;
+    max-width: 52ch;
+    margin-top: 2px;
+}
+
+body.ld-ui-gdrive .ld-welcome__eyebrow {
+    margin-bottom: 4px;
+    font-size: 10px;
+}
+
+@media (min-width: 900px) {
+    body.ld-ui-gdrive .ld-welcome__cta {
+        display: none;
+    }
+}
+
+body.ld-ui-gdrive .ld-welcome__stats {
+    margin-top: 6px;
+}
+
+body.ld-ui-gdrive .ld-stat {
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+/* —— Панель файлов —— */
+body.ld-ui-gdrive .ld-files-section {
+    margin-top: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-toolbar {
+    margin-bottom: 12px;
+    padding: 12px 14px 10px;
+}
+
+body.ld-ui-gdrive .ld-files-section__head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+    margin-bottom: 8px !important;
+}
+
+body.ld-ui-gdrive .ld-files-section__head h2 {
+    margin: 0 !important;
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.ld-ui-gdrive .ld-workspace__tools {
+    flex-shrink: 0;
+    margin-left: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-workspace__tools::after {
+    display: none !important;
+    content: none !important;
+}
+
+body.ld-ui-gdrive .ld-workspace__top {
+    padding: 0 0 10px !important;
+    margin: 0 !important;
+    align-items: center !important;
+}
+
+body.ld-ui-gdrive .ld-path button {
+    font-family: var(--font-sans) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 4px 8px !important;
+    color: var(--ld-muted) !important;
+}
+
+body.ld-ui-gdrive .ld-path button.is-root {
+    font-weight: 600 !important;
+    color: var(--ld-text) !important;
+}
+
+body.ld-ui-gdrive .ld-path button.is-root::after {
+    display: none !important;
+    content: none !important;
+}
+
+@media (min-width: 900px) {
+    body.ld-ui-gdrive .ld-workspace__top .ld-search,
+    body.ld-ui-gdrive .ld-workspace__top .ld-btn {
+        display: none !important;
+    }
+
+    body.ld-ui-gdrive .ld-workspace:not(.is-profile-mode) .ld-welcome {
+        display: none !important;
+    }
+}
+
+body.ld-ui-gdrive .ld-workspace__top-actions {
+    gap: 6px;
+}
+
+body.ld-ui-gdrive .ld-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px !important;
+}
+
+body.ld-ui-gdrive .ld-filter-row button {
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
+}
+
+body.ld-ui-gdrive .ld-content-panel {
+    padding: 12px 14px 16px;
+}
+
+body.ld-ui-gdrive .ld-main-col {
+    height: 100dvh;
+    overflow: hidden;
+}
+
+body.ld-ui-gdrive .ld-main {
+    min-height: 0 !important;
+    overflow: auto !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-list .ld-file__icon.has-asset::before,
+body.ld-ui-gdrive .ld-files.view-list .ld-file__icon.has-asset::after {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-list .ld-file__asset {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 6px;
+    object-fit: cover;
+    filter: none !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-list .ld-file__icon.has-asset i {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-table-head,
+body.ld-ui-gdrive .ld-files.view-list .ld-file {
+    grid-template-columns: minmax(220px, 2fr) minmax(160px, 1.2fr) minmax(130px, 1fr) minmax(120px, 1fr) 36px !important;
+    gap: 10px !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-list {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-flow: row !important;
+    gap: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-list > .ld-file {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* —— Сетка файлов: ровные карточки —— */
+body.ld-ui-gdrive .ld-file::after {
+    display: none !important;
+}
+
+body.ld-ui-gdrive .ld-file::before {
+    opacity: 0 !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 14px !important;
+}
+
+body.ld-ui-gdrive #driveGrid.ld-files.view-grid .ld-file {
+    min-height: 148px !important;
+    background: var(--ld-surface) !important;
+    border: 1px solid var(--ld-border) !important;
+    box-shadow: none !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon {
+    height: 80px !important;
+    min-height: 80px !important;
+    background: var(--ld-tone-bg, rgba(98, 84, 243, 0.08)) !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file--img .ld-file__icon {
+    padding: 8px;
+    background: rgba(98, 84, 243, 0.04) !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file--img .ld-file__asset {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__icon::after {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    opacity: 0.9;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__body {
+    padding: 8px 10px 10px !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__name {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+}
+
+body.ld-ui-gdrive .ld-files.view-grid .ld-file__meta {
+    font-size: 10px !important;
+    color: var(--ld-muted) !important;
+}
+
+body.ld-ui-gdrive .ld-file--upload {
+    border-style: dashed !important;
+    background: rgba(98, 84, 243, 0.03) !important;
+}
+
+body.ld-ui-gdrive .ld-file--upload .ld-file__icon {
+    background: transparent !important;
+}
+
+/* —— Верхняя панель —— */
+body.ld-ui-gdrive .ld-topbar {
+    padding: 8px 16px 8px 10px;
+    border-bottom: 1px solid var(--ld-border);
+}
+
+body.ld-ui-gdrive .ld-top-search {
+    max-width: min(680px, 100%);
+}
+
+body.ld-ui-gdrive .ld-seg button {
+    width: 36px;
+    height: 36px;
+}
+
+body.ld-ui-gdrive .ld-sort__btn {
+    height: 36px;
+    font-size: 13px;
+}
+
+/* —— Сброс лишних отступов из legacy —— */
+body.ld-ui-gdrive .ld-workspace__body {
+    padding: 0 !important;
+}
+
+body.ld-ui-gdrive .ld-panel--main {
+    background: var(--ld-surface) !important;
+}
+
+@media (max-width: 899px) {
+    body.ld-ui-gdrive .ld-shell {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.ld-ui-gdrive .ld-sidebar {
+        position: fixed;
+        z-index: 300;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+    }
+
+    body.ld-ui-gdrive.ld-sidebar-open .ld-sidebar {
+        transform: translateX(0);
+    }
+
+    body.ld-ui-gdrive .ld-welcome__cta {
+        width: 100%;
+    }
+
+    body.ld-ui-gdrive .ld-workspace {
+        padding: 8px 12px 28px !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    body.ld-ui-gdrive #driveGrid.ld-files.view-grid {
+        grid-template-columns: repeat(auto-fill, minmax(152px, 1fr)) !important;
+    }
+}
