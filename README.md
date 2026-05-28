@@ -1,57 +1,143 @@
-# LBL Cloud — выгрузка проекта
+# LBL Cloud
 
-Автономный комплект материалов веб-сервиса **LBL Cloud** (https://cloud.lbl3d.info) для учёбы, портфолио и сдачи документации.
+**Облачное хранилище файлов** с веб-интерфейсом в духе Google Drive: папки, загрузка, тарифы, 2FA.
 
-## Что внутри
+[![Live](https://img.shields.io/badge/demo-cloud.lbl3d.info-2563eb?style=for-the-badge)](https://cloud.lbl3d.info)
+[![App](https://img.shields.io/badge/app-открыть_диск-0ea5e9?style=for-the-badge)](https://cloud.lbl3d.info/app/)
 
-| Папка | Содержание |
-|-------|------------|
-| `docs/` | Пояснительная записка, ТЗ, инструкция по деплою |
-| `frontend/landing/` | Лендинг cloud.lbl3d.info |
-| `frontend/app/` | Веб-приложение «Мой диск» (`/app/`) |
-| `frontend/auth/` | Вход и регистрация |
-| `frontend/billing/` | Тарифы и оплата |
-| `frontend/legal/` | Политика и соглашение |
-| `frontend/shared/js/` | Общий клиент API (`api.js`) |
-| `backend/` | Модули API диска и биллинга Cloud, nginx, скрипты деплоя |
+<p align="center">
+  <img src="frontend/landing/assets/cloudscape-hero.png" alt="LBL Cloud — лендинг" width="720">
+</p>
 
-## Чего здесь нет (намеренно)
+---
 
-- Полный backend `main.py` и код **LBL Studio**, операторской панели, форума, ботов.
-- Файлы `.env`, ключи API, пароли БД, платёжные секреты.
-- Папка `vendor/` с шрифтами (ставится на сервере скриптом `setup-vendor.sh` в основном репозитории).
-- Дубликаты и черновики (`frontend123523` и т.п.).
+## О проекте
 
-Рабочий сервер использует общий API LBL; в этой папке — только **модули и интерфейс, относящиеся к Cloud**.
+**LBL Cloud** — отдельный продукт экосистемы LBL: личное облако на домене `cloud.lbl3d.info`, не «раздел сайта студии». Пользователь регистрируется, получает квоту (от 5 ГБ бесплатно), работает с файлами в браузере и при необходимости подключает платный тариф.
 
-## Локальный просмотр
+Проект делался как **полноценный веб-сервис**: лендинг, SPA-подобное приложение `/app/` без React, REST API на FastAPI, оплата через ЮKassa, деплой за nginx.
 
-Из **корня основного репозитория** `site` (не из этой папки):
+| | |
+|---|---|
+| **Роль** | full-stack: UI/UX диска, клиентский JS, модули API, биллинг, деплой |
+| **Статус** | в продакшене |
+| **Период** | 2025–2026 |
 
-```bash
-python backend/dev-serve-cloud.py
+Подробный разбор решений — в [docs/PROJECT.md](docs/PROJECT.md).
+
+---
+
+## Возможности
+
+- **Мой диск** — дерево папок, сетка и список, хлебные крошки, поиск, недавние, избранное, корзина  
+- **Загрузка** — drag-and-drop, простая и chunked-загрузка больших файлов (до лимита сервера)  
+- **Превью и скачивание** — просмотр и выгрузка через API с проверкой прав  
+- **Аккаунт** — профиль, 2FA по email, смена пароля, выход со всех устройств, история входов  
+- **Тарифы** — Free / Pro / Team, оплата подписки, синхронизация статуса после ЮKassa  
+- **Безопасность** — JWT в cookie, отдельный бренд писем для Cloud, валидация HTML/CSS на публичных страницах  
+
+---
+
+## Скриншоты
+
+| Лендинг | Приложение |
+|---------|------------|
+| [cloud.lbl3d.info](https://cloud.lbl3d.info) | [cloud.lbl3d.info/app/](https://cloud.lbl3d.info/app/) |
+
+<p align="center">
+  <img src="frontend/landing/assets/detail-wide-scene.png" alt="Секция продукта" width="640">
+  &nbsp;&nbsp;
+  <img src="frontend/landing/assets/detail-glass-scene.png" alt="UI-детали" width="280">
+</p>
+
+> Снимки экрана приложения и входа — в [docs/screenshots/](docs/screenshots/). Их можно добавить своими PNG для GitHub Pages / PDF портфолио.
+
+---
+
+## Стек
+
+| Слой | Технологии |
+|------|------------|
+| Frontend | HTML5, CSS3, vanilla JavaScript (ES5+), Font Awesome |
+| Backend | Python 3, FastAPI, SQLAlchemy, PostgreSQL |
+| Инфра | nginx, uvicorn, ЮKassa |
+| Auth | JWT (httpOnly cookie), 2FA по email |
+
+Архитектура:
+
+```mermaid
+flowchart LR
+  U[Браузер] --> N[nginx]
+  N --> F[Статика Cloud]
+  N --> A[FastAPI]
+  A --> D[lbl_drive]
+  A --> B[cloud_billing]
+  A --> M[auth / profile]
+  D --> PG[(PostgreSQL)]
+  D --> FS[Файлы на диске]
 ```
 
-Откройте: http://127.0.0.1:8766/app/
+---
 
-Демо без API: `?demo=1`
+## Быстрый старт
+
+### Посмотреть UI без сервера
+
+```bash
+cd frontend
+python -m http.server 8766
+# или из монорепо site: python backend/dev-serve-cloud.py
+```
+
+Открыть: [http://127.0.0.1:8766/app/?demo=1](http://127.0.0.1:8766/app/?demo=1) — демо-данные без API.
+
+### API и прод
+
+Рабочий backend — общий инстанс LBL (монтирование `lbl_drive` + `cloud_billing` в `main.py`). В этом репозитории — **исходники модулей Cloud и фронта**; секреты и полный `main.py` не публикуются.
+
+Деплой: [docs/DEPLOY.md](docs/DEPLOY.md).
+
+---
+
+## Структура репозитория
+
+```
+LBL-Cloud/
+├── frontend/
+│   ├── landing/      # Главная cloud.lbl3d.info
+│   ├── app/          # Веб-приложение «Мой диск»
+│   ├── auth/         # Вход и регистрация
+│   ├── billing/      # Тарифы
+│   └── shared/js/    # Клиент API
+├── backend/
+│   ├── lbl_drive.py      # /api/drive/*
+│   ├── cloud_billing.py  # /api/cloud/billing/*
+│   └── snippets/         # Фрагменты auth/почты для документации
+└── docs/                 # Документация (см. ниже)
+```
+
+---
 
 ## Документация
 
-- **`docs/API-CLOUD.md`** — полный справочник API (диск, биллинг, вход, 2FA, что в репо / что в `main.py`)
-- **`docs/ЛИСТИНГИ-ПУТИ.md`** — куда смотреть код для 15 листингов Приложения А (техдок)
-- `docs/ТЕХНИЧЕСКАЯ-ДОКУМЕНТАЦИЯ-LBL-CLOUD.md` — пояснительная записка (курс / техдок; листинги уже внутри текста)
-- `backend/snippets/` — выдержки из `main.py` и `utils.py` для листингов А.13, А.15
-- `docs/CLOUD-APP-TZ.md` — техническое задание продукта
-- `docs/DEPLOY.md` — краткий деплой на сервер
-- `ЧТО-НЕ-ВХОДИТ.txt` — что намеренно не включено в выгрузку
+| Документ | Для кого |
+|----------|----------|
+| [docs/PROJECT.md](docs/PROJECT.md) | Портфолио: задача, решения, результат |
+| [docs/API-CLOUD.md](docs/API-CLOUD.md) | Разработчик: эндпоинты API |
+| [docs/CLOUD-APP-TZ.md](docs/CLOUD-APP-TZ.md) | ТЗ продукта |
+| [docs/ТЕХНИЧЕСКАЯ-ДОКУМЕНТАЦИЯ-LBL-CLOUD.md](docs/ТЕХНИЧЕСКАЯ-ДОКУМЕНТАЦИЯ-LBL-CLOUD.md) | Пояснительная записка (учёба) |
+| [docs/ЛИСТИНГИ-ПУТИ.md](docs/ЛИСТИНГИ-ПУТИ.md) | Приложение А: пути к листингам |
 
-## Структура URL на проде
+---
 
-| URL | Источник в этой папке |
-|-----|------------------------|
-| `/` | `frontend/landing/` |
-| `/app/` | `frontend/app/` |
-| `/pages/auth/` | `frontend/auth/` |
-| `/pages/billing/` | `frontend/billing/` |
-| `/api/` | `backend/` (на сервере через uvicorn + `lbl_drive.py`, `cloud_billing.py`) |
+## Контакты
+
+- **Автор:** [@Shivarin](https://github.com/Shivarin)  
+- **Продукт:** [cloud.lbl3d.info](https://cloud.lbl3d.info)  
+- **Студия:** [lbl3d.info](https://lbl3d.info) (смежный продукт, общий backend)
+
+---
+
+<p align="center">
+  <sub>Сделано в рамках экосистемы LBL · 2026</sub>
+</p>
